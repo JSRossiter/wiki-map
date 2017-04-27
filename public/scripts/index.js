@@ -1,7 +1,7 @@
 function renderList (lists) {
   for (list of lists) {
     $('.lists')
-      .append($('<a>').attr('href', '/lists/' + list.id)
+      .prepend($('<a>').attr('href', '/lists/' + list.id)
       .append($('<h2>').text(list.title)));
   }
 }
@@ -41,10 +41,10 @@ $(function() {
     {title: "Another one!", id: 3}
   ];
   renderList(lists);
-  // $.ajax({
-  //   url: '/lists',
-  //   method: 'GET',
-  //   success: renderList
-  // });
+  $.ajax({
+    url: '/lists',
+    method: 'GET',
+    success: renderList
+  });
   $("input[value='Submit'").click(newList);
 });

@@ -3,8 +3,8 @@ var map;
 // takes an array of point objects, places markers, binds popups and sets view
 function addMarkers (points) {
   var markers = [];
-  for (var i = 0; i < points.length; i++) {
-    markers.push(L.marker(points[i].coordinates).addTo(map).bindPopup(createPopup(points[i])));
+  for (point of points) {
+    markers.push(L.marker(point.coordinates).addTo(map).bindPopup(createPopup(point)));
   }
   var group = new L.featureGroup(markers);
   map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
@@ -33,25 +33,40 @@ function flashMessage (message) {
   });
 }
 
-
+function isValidImageUrl(url, callback) {
+  var img = new Image();
+  img.onerror = function() { flashMessage("Please enter a valid image URL") }
+  img.onload =  callback;
+  img.src = url;
+}
 
 function onMapClick(e) {
   event.preventDefault();
+
+  function postPoint () {
+    var $point = $(".new-marker-form");
+    $.ajax({
+      url: '/points/new',
+      method: 'POST',
+      data: $point.serialize(),
+      success: function (data) {
+        marker.dragging.disable();
+        marker.off('popupclose');
+        marker.closePopup();
+        marker.unbindPopup();
+        marker.bindPopup(createPopup(data)).openPopup();
+      }
+    });
+  }
 
   function newPoint (event) {
     event.preventDefault();
     if (!$("input[name='title']").val()) {
       flashMessage("Please enter a title");
+    } else if ($("input[name='image']").val()) {
+      isValidImageUrl($("input[name='image']").val(), postPoint)
     } else {
-      var $point = $(".new-marker-form");
-      // $.ajax({
-      //   url: '/points/new',
-      //   method: 'POST',
-      //   data: $point.serialize(),
-      //   success: function () {
-      //     // remove drag option
-      //   }
-      // });
+      postPoint();
     }
   }
   function newPointForm (coords) {
@@ -62,6 +77,7 @@ function onMapClick(e) {
     var $image = $("<input type='text' name='image'>");
     // hidden input field for list and coords
     var $coords = $("<input type='hidden' name='coords'>").val(coords.lat + ', ' + coords.lng);
+    // TODO add list id
     var $list = $("<input type='hidden' name='list'>").val(1);
     var $submit = $("<input type='submit'>");
     $submit.on("click", newPoint);
@@ -101,11 +117,11 @@ function onMapClick(e) {
 };
 
 $(document).ready(function() {
-  // $.ajax({
-  //   url: document.URL + '/points',
-  //   method: 'GET',
-  //   success: addMarkers
-  // });
+  $.ajax({
+    url: document.URL + '/points',
+    method: 'GET',
+    success: addMarkers
+  });
   map = L.map('map', {
     center: [49.2827, -123.1207],
     zoom: 13
