@@ -1,5 +1,6 @@
 // users, points, lists, fav_lists, contributions
 
+// hi
 exports.seed = function(knex, Promise) {
   return knex('contributions').del()
   .then(() => {
