@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router  = express.Router();
-const listHelper = require("../db/insert-tables");
+const listHelper = require("/db/insert-tables");
 
 module.exports = (knex) => {
 

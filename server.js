@@ -21,7 +21,7 @@ const listRoutes    = require("./routes/lists");
 const pointRoutes   = require("./routes/points");
 
 // Helper functions to query db
-const dbHelper = require("../db/insert-tables"); //***Update const/file names?
+const dbHelper = require("/db/insert-tables"); //***Update const/file names?
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
