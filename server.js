@@ -62,14 +62,20 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+  // add user to database
   const username = req.body.username;
-  registerUser(username); // add user to database
+  registerUser(username); //***Update this function?
   res.redirect("/");
 });
 
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
+});
+
+// handle 404 errors
+app.use((req, res) => {
+  res.status(404).send("404: Page not Found");
 });
 
 app.listen(PORT, () => {

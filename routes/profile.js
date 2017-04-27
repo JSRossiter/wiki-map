@@ -2,23 +2,26 @@
 
 const express = require('express');
 const router  = express.Router();
+const profileHelper = require("../helpers/profile-helpers"); //***Update const/file names?
 
 module.exports = (knex) => {
 
-  router.get("/profile", (req, res) => {
+  router.get("/", (req, res) => {
     let templateVars = { username: req.session.username };
-    res.render(/*profile*/, templateVars);
+    res.render(profile, templateVars);
   });
 
-  router.get("/profile/favorites", (req, res) => {
+  router.get("/favorites", (req, res) => {
     // get user favorites to display on profile page
+    res.body.favorites = profileHelper.getFavorites; // ***Update function name?
   });
 
-  router.get("/profile/contributions", (req, res) => {
+  router.get("/contributions", (req, res) => {
     // get user contributions to display on profile page
+    res.body.contributions = profileHelper.getContributions; // ***Update function name?
   });
 
-  router.post("/profile/favorites/:list_title", (req, res) => {
+  router.post("/favorites/:list_title", (req, res) => {
     // create/remove favorite
   });
 
