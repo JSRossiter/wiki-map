@@ -2,18 +2,18 @@
 
 const express = require('express');
 const router  = express.Router();
-const pointsHelper = require("../db/insert-tables"); //***Update const/file names?
+const pointsHelper = require("/db/insert-tables"); //***Update const/file names?
 
 module.exports = (knex) => {
 
-  router.post("/new/:list_id", (req, res) => {
+  router.post("/new", (req, res) => {
     // (auth users only) create new point, add to database
     // *** validate body data before passing to function
     let title = req.body.title;
     let description = req.body.description;
-    let image = req.body.image_url;
-    let coordinates = req.body.coordinates;
-    let list_id = req.params.list_id;
+    let image = req.body.image;
+    let coordinates = req.body.coords;
+    let list_id = req.body.list;
     pointsHelper.insertPoint(title, description, image, coordinates, list_id);
     res.status(200).send(); // ***Send point data?
   });
