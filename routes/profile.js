@@ -8,7 +8,7 @@ module.exports = (knex) => {
 
   router.get("/", (req, res) => {
     let templateVars = { username: req.session.username };
-    res.render(profile, templateVars);
+    res.render("profile", templateVars);
   });
 
   router.get("/favorites", (req, res) => {
