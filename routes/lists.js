@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router  = express.Router();
-const listHelper = require("../helpers/list-helpers"); //***Update const/file names?
+const listHelper = require("../db/insert-tables");
 
 module.exports = (knex) => {
 
@@ -14,15 +14,20 @@ module.exports = (knex) => {
   router.post("/new", (req, res) => {
     // (auth users only) add new list to database and redirect to that list map
     let title = req.body.title;
-    listHelper.insertList(title); // ***Update function?
-    let list_id = listHelper.getList.list_id;
+    listHelper.insertList(title);
+    let list_id = listHelper.getList.list_id; // ***Update function?
+    // need to query list_id from list that was just inserted
     res.redirect = ("/lists/" + list_id);
   });
 
   router.get("/:list_id", (req, res) => {
     // render map with point markers
-    let templateVars = { list: "Best food in Vancouver"};
-    res.render("map");
+    let list_title = listHelper.getListTitleById; // ***Update function?
+    let templateVars = {
+      username: req.session.username,
+      list: list_title
+    };
+    res.render("map", templateVars);
   });
 
   router.get("/:list_title/points", (req, res) => {
