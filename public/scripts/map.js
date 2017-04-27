@@ -37,8 +37,24 @@ function createPopup (point) {
   return $div[0];
 }
 
+function newMarkerForm (coords) {
+  var $div = $("<div>");
+  var $form = $("<form>");
+  var $title = $("<input type='text' name='title'>");
+  var $decription = $("<input type='text' name='decription'>");
+  var $image = $("<input type='text' name='image'>");
+  var $submit = $("<input type='submit'>");
+  $submit.click(newMarker);
+  $form.append($title, $description, $image, $submit)
+  $div.append($form);
+  return $div[0]
+}
+
 function onMapClick(e) {
-  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup("hello");
+  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newMarkerForm(e.latlng), {
+    closeOnClick: false,
+    keepInView: true
+  });
   marker.openPopup();
   marker.on('dragend', function(event){
     var marker = event.target;
