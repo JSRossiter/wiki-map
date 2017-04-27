@@ -22,7 +22,7 @@ module.exports = (knex) => {
     // (auth users only) edit point, update database
     // *** validate body data before passing to function
     let point_id = req.params.point_id;
-    let pointData = ? ;
+    // let pointData = ? ;
     pointsHelper.editPoint(point_id, pointData); //***Update this function?
     res.status(200).send(); // ***Send point data?
   });
