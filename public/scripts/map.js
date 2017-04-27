@@ -14,11 +14,13 @@ $("#map").height($(window).height() - 150);
 map.invalidateSize();
 
 function addPoints (points) {
+  var markers = [];
   for (var i = 0; i < points.length; i++) {
-    L.marker(points[i].coordinates).addTo(map).bindPopup(createPopup(points[i]));
+    markers.push(L.marker(points[i].coordinates).addTo(map).bindPopup(createPopup(points[i])));
   }
+  var group = new L.featureGroup(markers);
+  map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
 }
-
 
 function createPopup (point) {
   var $div = $("<div>");
@@ -33,9 +35,8 @@ function createPopup (point) {
 }
 
 $(document).ready(function() {
-  // var list = 'restaurants';
   // $.ajax({
-  //   url: '/lists/' + list + '/points',
+  //   url: document.URL + '/points',
   //   method: 'GET',
   //   success: addPoints
   // });
