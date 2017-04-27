@@ -44,15 +44,45 @@ const knex = db.connect();
 //   console.error(error);
 // });
 
-knex.select('lists.title', 'users.username')
-.from('users')
-.join('lists', 'users.id', '=', 'creator_id')
+// knex.select('lists.title', 'users.username')
+// .from('users')
+// .join('lists', 'users.id', '=', 'creator_id')
+// .then(res => {
+//   console.log(res);
+//   return res;
+// })
+// .catch(error => {
+//   console.error(error);
+// });
+
+// GET /lists
+// Return list of lists
+
+function cb(res) {
+  for (let title in res) {
+    if (res.hasOwnProperty(title)) {
+      console.log(res[title].title);
+    }
+  }
+}
+
+knex.select('lists.title')
+.from('lists')
 .then(res => {
-  console.log(res);
+  cb(res);
   return res;
 })
 .catch(error => {
   console.error(error);
 });
+
+// GET /lists/:list_id/points
+// Return data - points for given list
+// GET /profile/favorites
+// Return favorites for user
+// GET /profile/contributions
+// Return contributions
+// DELETE /points/:point_id
+// Remove point
 
 knex.destroy();
