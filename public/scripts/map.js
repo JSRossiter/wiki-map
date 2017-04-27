@@ -4,7 +4,7 @@ var map;
 function addMarkers (points) {
   var markers = [];
   for (point of points) {
-    markers.push(L.marker(point.coordinates).addTo(map).bindPopup(createPopup(point)));
+    markers.push(L.marker(point.coordinates.split(",")).addTo(map).bindPopup(createPopup(point)));
   }
   var group = new L.featureGroup(markers);
   map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
@@ -142,13 +142,13 @@ $(document).ready(function() {
     title: "tacofino",
     description: "some pretty decent tacos",
     image: "https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg",
-    coordinates: [49.2827202, -123.1048181]
+    coordinates: "49.2827202,-123.1048181"
   },
   {
     title: "annalena",
     description: "they have chocolate chicken skin, what else is there to say",
     image: "http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1492718212399/?format=1500w",
-    coordinates: [49.2708219, -123.1467779]
+    coordinates: "49.2708219,-123.1467779"
   }];
   addMarkers(test);
   map.on('click', onMapClick);
