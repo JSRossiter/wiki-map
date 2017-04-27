@@ -41,10 +41,10 @@ $(function() {
     {title: "Another one!", id: 3}
   ];
   renderList(lists);
-  $.ajax({
-    url: '/lists',
-    method: 'GET',
-    success: renderList
-  });
+  // $.ajax({
+  //   url: '/lists',
+  //   method: 'GET',
+  //   success: renderList
+  // });
   $("input[value='Submit'").click(newList);
 });

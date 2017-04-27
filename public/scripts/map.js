@@ -37,6 +37,18 @@ function createPopup (point) {
   return $div[0];
 }
 
+function onMapClick(e) {
+  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup("hello");
+  marker.openPopup();
+  marker.on('dragend', function(event){
+    var marker = event.target;
+    var position = marker.getLatLng();
+    console.log(position);
+    marker.setLatLng(position,{id:10,draggable:'true'});
+  });
+  map.addLayer(marker);
+};
+
 $(document).ready(function() {
   // $.ajax({
   //   url: document.URL + '/points',
@@ -58,4 +70,5 @@ $(document).ready(function() {
     coordinates: [49.2708219, -123.1467779]
   }];
   addPoints(test);
+  map.on('click', onMapClick);
 });
