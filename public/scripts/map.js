@@ -1,19 +1,5 @@
 // initialize map
-var map = L.map('map', {
-  center: [49.2827, -123.1207],
-  zoom: 13
-});
-
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiamVmZnJvc3NpdGVyIiwiYSI6ImNqMXprYm9kOTAyNTcyd240dmJ3ZmMwdGsifQ.npV7wcL8ZtbMgGsQ4gL99g'
-}).addTo(map);
-
-$("#map").height($(window).height() - 150);
-map.invalidateSize();
-
+var map;
 // takes an array of point objects, places markers, binds popups and sets view
 function addPoints (points) {
   var markers = [];
@@ -71,6 +57,20 @@ $(document).ready(function() {
   //   method: 'GET',
   //   success: addPoints
   // });
+  map = L.map('map', {
+    center: [49.2827, -123.1207],
+    zoom: 13
+  });
+
+  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: 'pk.eyJ1IjoiamVmZnJvc3NpdGVyIiwiYSI6ImNqMXprYm9kOTAyNTcyd240dmJ3ZmMwdGsifQ.npV7wcL8ZtbMgGsQ4gL99g'
+  }).addTo(map);
+
+  $("#map").height($(window).height() - 150);
+  map.invalidateSize();
 
 
   var test = [{
