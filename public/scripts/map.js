@@ -1,7 +1,7 @@
 // initialize map
 var map;
 // takes an array of point objects, places markers, binds popups and sets view
-function addPoints (points) {
+function addMarkers (points) {
   var markers = [];
   for (var i = 0; i < points.length; i++) {
     markers.push(L.marker(points[i].coordinates).addTo(map).bindPopup(createPopup(points[i])));
@@ -23,39 +23,88 @@ function createPopup (point) {
   return $div[0];
 }
 
-function newMarkerForm (coords) {
-  var $div = $("<div>");
-  var $form = $("<form>");
-  var $title = $("<input type='text' name='title'>");
-  var $decription = $("<input type='text' name='decription'>");
-  var $image = $("<input type='text' name='image'>");
-  var $submit = $("<input type='submit'>");
-  $submit.click(newMarker);
-  $form.append($title, $description, $image, $submit)
-  $div.append($form);
-  return $div[0]
+function flashMessage (message) {
+  var span = $("<span>").addClass("flash-message").text(message);
+  $("form").append(span);
+  span.slideDown(function() {
+    setTimeout(function() {
+      span.slideUp();
+    }, 2000);
+  });
 }
 
+
+
 function onMapClick(e) {
-  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newMarkerForm(e.latlng), {
+  event.preventDefault();
+
+  function newPoint (event) {
+    event.preventDefault();
+    if (!$("input[name='title']").val()) {
+      flashMessage("Please enter a title");
+    } else {
+      var $point = $(".new-marker-form");
+      // $.ajax({
+      //   url: '/points/new',
+      //   method: 'POST',
+      //   data: $point.serialize(),
+      //   success: function () {
+      //     // remove drag option
+      //   }
+      // });
+    }
+  }
+  function newPointForm (coords) {
+    var $div = $("<div>");
+    var $form = $("<form>").addClass("new-marker-form");
+    var $title = $("<input type='text' name='title'>");
+    var $description = $("<input type='text' name='description'>");
+    var $image = $("<input type='text' name='image'>");
+    // hidden input field for list and coords
+    var $coords = $("<input type='hidden' name='coords'>").val(coords.lat + ', ' + coords.lng);
+    var $list = $("<input type='hidden' name='list'>").val(1);
+    var $submit = $("<input type='submit'>");
+    $submit.on("click", newPoint);
+    $form.append($title, $description, $image, $submit)
+    $div.append($form);
+    return $div[0];
+  }
+
+  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newPointForm(e.latlng), {
     closeOnClick: false,
     keepInView: true
   });
-  marker.openPopup();
+  var isDragging = false;
+  marker.on('dragstart', function (event) {
+    isDragging = true;
+  });
+
   marker.on('dragend', function(event){
     var marker = event.target;
-    var position = marker.getLatLng();
-    console.log(position);
-    marker.setLatLng(position,{id:10,draggable:'true'});
+    var coords = marker.getLatLng();
+    marker.setLatLng(coords,{id:10,draggable:'true'});
+    marker.openPopup();
+    isDragging = false;
+    $("input[name='list']").val(coords.lat + ', ' + coords.lng);
   });
-  map.addLayer(marker);
+
+  marker.on('popupclose', function(e) {
+    setTimeout(function() {
+      if (isDragging == false) {
+        map.removeLayer(e.target);
+      }
+    }, 100);
+  });
+
+  map.addLayer(marker)
+  marker.openPopup();
 };
 
 $(document).ready(function() {
   // $.ajax({
   //   url: document.URL + '/points',
   //   method: 'GET',
-  //   success: addPoints
+  //   success: addMarkers
   // });
   map = L.map('map', {
     center: [49.2827, -123.1207],
@@ -85,6 +134,6 @@ $(document).ready(function() {
     image: "http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1492718212399/?format=1500w",
     coordinates: [49.2708219, -123.1467779]
   }];
-  addPoints(test);
+  addMarkers(test);
   map.on('click', onMapClick);
 });
