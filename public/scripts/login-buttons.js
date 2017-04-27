@@ -1,3 +1,4 @@
+// returns jquery form with submit button value as specified input
 function createLoginForm (input) {
   var $form = $('<form>');
   var $input = $('<input type="text" name="username">');
@@ -18,12 +19,20 @@ function registerNavButton (event) {
   $('.container').append(createLoginForm("Register"));
 }
 
-function logoutButton (event) {
+function logout () {
+  // toggle buttons
+}
 
+function logoutButton (event) {
+  $.ajax({
+    url: '/logout',
+    method: 'POST',
+    success: logout
+  })
 }
 
 $(function() {
   $('.logout').click(logoutButton);
   $('.register').click(registerNavButton);
   $('.login').click(loginNavButton);
-})
+});

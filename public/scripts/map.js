@@ -1,3 +1,4 @@
+// initialize map
 var map = L.map('map', {
   center: [49.2827, -123.1207],
   zoom: 13
@@ -13,6 +14,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 $("#map").height($(window).height() - 150);
 map.invalidateSize();
 
+// takes an array of point objects, places markers, binds popups and sets view
 function addPoints (points) {
   var markers = [];
   for (var i = 0; i < points.length; i++) {
@@ -22,6 +24,7 @@ function addPoints (points) {
   map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
 }
 
+// returns html element to be used as a popup when given a point object
 function createPopup (point) {
   var $div = $("<div>");
   var $title = $("<h4>").text(point.title);
@@ -40,6 +43,8 @@ $(document).ready(function() {
   //   method: 'GET',
   //   success: addPoints
   // });
+
+
   var test = [{
     title: "tacofino",
     description: "some pretty decent tacos",

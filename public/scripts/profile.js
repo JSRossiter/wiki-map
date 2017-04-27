@@ -1,6 +1,6 @@
-function renderList (lists) {
+function renderList (lists, $container) {
   for (list of lists) {
-    $('.lists')
+    $container
       .append($('<a>').attr('href', '/lists/' + list.id)
       .append($('<h2>').text(list.title)));
   }
@@ -40,11 +40,21 @@ $(function() {
     {title: "Best cinemas", id: 2},
     {title: "Another one!", id: 3}
   ];
-  renderList(lists);
-  $.ajax({
-    url: '/lists',
-    method: 'GET',
-    success: renderList
-  });
+  renderList(lists, $('.favorites'));
+  renderList(lists, $('.contributions'));
+  // $.ajax({
+  //   url: '/profile/favorites',
+  //   method: 'GET',
+  //   success: function (data) {
+  //     renderList (data, $('.favorites'));
+  //   }
+  // });
+  // $.ajax({
+  //   url: '/profile/contributions',
+  //   method: 'GET',
+  //   success: function (data) {
+  //     renderList (data, $('.contributions'));
+  //   }
+  // });
   $("input[value='Submit'").click(newList);
 });
