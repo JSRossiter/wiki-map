@@ -34,7 +34,6 @@ module.exports = {
     return knex.insert({title: title, description: description, image: image, coordinates: coord, list_id: listId})
     .into('points')
     .then((data) => {
-      console.log("in destroy");
       return knex.destroy();
     }).catch((error) => {
       console.error("error running query", error);
@@ -45,6 +44,17 @@ module.exports = {
     console.log("Inserting into fav_lists...");
     return knex.insert({list_id: listId, user_id: userId})
     .into('fav_lists')
+    .then((data) => {
+      return knex.destroy();
+    }).catch((error) => {
+      console.error("error running query", error);
+    });
+  },
+  insertContributions: (pointId, userId) => {
+    const knex = db.connect();
+    console.log("Inserting into contributions...");
+    return knex.insert({point_id: pointId, user_id: userId})
+    .into('contributions')
     .then((data) => {
       return knex.destroy();
     }).catch((error) => {
