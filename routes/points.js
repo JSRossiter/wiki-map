@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const pointsHelper = require("/db/insert-tables"); //***Update const/file names?
+const pointsHelper = require("../db/insert-tables"); //***Update const/file names?
 
 module.exports = (knex) => {
 
