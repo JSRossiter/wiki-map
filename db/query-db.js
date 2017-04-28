@@ -15,7 +15,7 @@ module.exports = function(knex) {
       .where('username', '=', username);
     },
     getPoints: (listId) => {
-      console.log("Getting points for ", listId);
+      console.log("Getting points for", listId);
       return knex.select('*')
       .from('points')
       .where('list_id', '=', listId);
@@ -28,7 +28,7 @@ module.exports = function(knex) {
       .where('lists.user_id', '=', userId);
     },
     getContributions: (userId) => {
-      console.log("Getting contributions for ", userId);
+      console.log("Getting contributions for", userId);
       return knex.select('username', 'users.id')
       .from('users')
       .join('contributions', 'users.id', '=', 'contributions.user_id')

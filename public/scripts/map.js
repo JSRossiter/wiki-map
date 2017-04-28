@@ -12,8 +12,10 @@ function addMarkers (points) {
     $(marker).click(function (event) { currentMarker = event.target })
     markers.push(marker);
   }
-  var group = new L.featureGroup(markers);
-  map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
+  if (points.length) {
+    var group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
+  }
 }
 
 // returns html element to be used as a popup when given a point object

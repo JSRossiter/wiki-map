@@ -166,7 +166,7 @@ const queryMethods = require("./query-db")(knex);
 //   console.error(error);
 // });
 
-const userId = 1001;
+const userId = 1000;
 queryMethods.getFavoriteLists(userId)
 .then(res => {
   console.log(res);
