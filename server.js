@@ -20,8 +20,9 @@ const profileRoutes = require("./routes/profile");
 const listRoutes    = require("./routes/lists");
 const pointRoutes   = require("./routes/points");
 
-// Helper functions to query db
-const dbHelper = require("./db/insert-tables"); //***Update const/file names?
+// Helper functions
+const routeHelpers  = require("./routes/route-helpers");
+const dbInsert      = require("./db/insert-tables")(knex); //***Update const/file names?
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -66,19 +67,13 @@ app.post("/login", (req, res) => {
 
 app.post("/register", (req, res) => {
   // add user to database
-  const username = req.body.username;
-  dbHelper.insertUser(username); //***Update this function?
+  dbInsert.insertUser(req.body.username); //***Update this function?
   res.redirect("/");
 });
 
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
-});
-
-// handle 404 errors
-app.use((req, res) => {
-  res.status(404).send("404: Page not Found");
 });
 
 app.listen(PORT, () => {
