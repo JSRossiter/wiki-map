@@ -156,11 +156,20 @@ const queryMethods = require("./query-db")(knex);
 // .catch(error => {
 //   console.error(error);
 // });
+//
+// const username = "maxritcher";
+// queryMethods.getUserId(username)
+// .then(res => {
+//   console.log(res[0].id);
+// })
+// .catch(error => {
+//   console.error(error);
+// });
 
-const username = "maxritcher";
-queryMethods.getUserId(username)
+const userId = 1001;
+queryMethods.getFavoriteLists(userId)
 .then(res => {
-  console.log(res[0].id);
+  console.log(res);
 })
 .catch(error => {
   console.error(error);

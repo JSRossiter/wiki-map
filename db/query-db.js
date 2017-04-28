@@ -17,16 +17,15 @@ module.exports = function(knex) {
     getPoints: (listId) => {
       console.log("Getting points for ", listId);
       return knex.select('*')
-      .from('points')``
+      .from('points')
       .where('list_id', '=', listId);
     },
     getFavoriteLists: (userId) => {
       console.log("Getting favorite lists for ", userId);
       return knex.select('lists.id', 'lists.title')
-      .from('users')
-      .join('lists', 'users.id', '=', 'lists.user_id')
-      .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
-      .where('users.id', '=', userId);
+      .from('lists')
+      .join('fav_lists', 'lists.id', '=', 'list_id')
+      .where('lists.user_id', '=', userId);
     },
     getContributions: (userId) => {
       console.log("Getting contributions for ", userId);
