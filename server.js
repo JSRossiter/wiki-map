@@ -69,7 +69,7 @@ app.post('/login', (req, res) => {
   .then(data => {
     req.session.user_id = data[0].id;
     req.session.username = req.body.username;
-    res.redirect('/');
+    res.status(200).send();
   })
   .catch(error => {
     console.error(error);
@@ -82,7 +82,7 @@ app.post('/register', (req, res) => {
   .then(data => {
     req.session.user_id = data[0].id;
     req.session.username = req.body.username;
-    res.redirect('/');
+    res.status(200).send();
   })
   .catch(error => {
     console.error(error);
@@ -91,7 +91,7 @@ app.post('/register', (req, res) => {
 
 app.post('/logout', (req, res) => {
   req.session = null;
-  res.redirect('/');
+  res.status(200).send();
 });
 
 app.listen(PORT, () => {
