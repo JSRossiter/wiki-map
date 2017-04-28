@@ -8,7 +8,8 @@ module.exports = function(knex) {
   return {
     insertUser: (firstName) => {
       console.log("Inserting into users...");
-      return knex.insert({username: firstName}).into('users');
+      return knex.returning('id')
+      .insert({username: firstName}).into('users');
     },
     insertList: (title, userId) => {
       console.log("Inserting into lists...");

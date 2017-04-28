@@ -167,36 +167,13 @@ const removePoints = require("./remove-points")(knex);
 //   console.error(error);
 // });
 
-// const userId = 1000;
-// queryMethods.getFavoriteLists(userId)
-// .then(res => {
-//   console.log(res);
-// })
-// .catch(error => {
-//   console.error(error);
-// });
-
-function getDate() {
-  const currTime = new Date().getTime();
-  console.log(currTime);
-  const date = currTime.getDate();
-  const year = currTime.getFullYear();
-  const month = currTime.getMonth();
-  const hour = currTime.getHours();
-  const minutes = currTime.getMinutes();
-  return `${year}-${month}-${date}: ${hour}: ${minutes}`;
-}
-
-// getDate();
 const pointId = 1000;
 const userId = 1000;
 
-queryMethods.getOneList(1001)
+removePoints.pointsRemovedAt(pointId)
 .then(res => {
   console.log(res);
 })
-.catch(err => {
-  console.error(error);
+.catch(error => {
+  console.log(error);
 });
-
-// removePoints.contributionsRemovedAt()
