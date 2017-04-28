@@ -70,9 +70,16 @@ $(function() {
   $.ajax({
     url: '/lists',
     method: 'GET',
-    success: renderList
-  }).then(function () {
-    $('.favorite').click(favorite);
+  }).then(function (data) {
+    var lists = data
+    $.ajax({
+      url: '/profile/favorites',
+      method: 'GET'
+    })
+    .then(function (faves) {
+      renderList(lists, faves)
+      $('.favorite').click(favorite);
+    });
   });
   $("input[value='Submit'").click(newList);
 });
