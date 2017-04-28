@@ -36,7 +36,7 @@ function newList (event) {
       method: "POST",
       data: $title.serialize(),
       success: function (data) {
-        window.location.replace("/" + data.id);
+        window.location.replace("/lists/" + data.id);
       }
     });
   }
