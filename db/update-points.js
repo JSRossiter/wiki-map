@@ -12,6 +12,7 @@ module.exports = function(knex) {
       });
     },
     contributionsRemovedAt: (pointId, userId, dateNow) => {
+      console.log('Updating removed_at for contributions');
       knex('contributions')
       .where('contributions.point_id', '=', pointId)
       .andWhere('contributions.user_id', '=', userId)
