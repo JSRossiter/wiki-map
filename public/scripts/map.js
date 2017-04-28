@@ -156,7 +156,7 @@ function newPointForm (coordinates, cb) {
   // hidden input field for list and coordinates
   var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
   // TODO add list id
-  var $list_id = $("<input type='hidden' name='list_id'>").val($(main).data(listId));
+  var $list_id = $("<input type='hidden' name='list_id'>").val($(main).data('list-id'));
   var $submit = $("<input type='submit'>");
   $submit.on("click", {post: cb}, newPoint);
   $form.append($title, $description, $image, $submit)

@@ -1,8 +1,13 @@
 function renderList (lists) {
+  $('.lists').append($('<ul>'));
+
   for (list of lists) {
-    $('.lists')
-      .prepend($('<a>').attr('href', '/lists/' + list.id)
-      .append($('<h2>').text(list.title)));
+    $('.lists ul').prepend($('<li>')
+      .append($('<a>')
+        .attr('href', '/lists/' + list.id)
+        .append($('<h2>').text(list.title)))
+      .append($('<a>').text('Fave').addClass('favorite').data('list-id', list.id))
+    );
   }
 }
 
@@ -34,6 +39,19 @@ function newList (event) {
   }
 }
 
+function favorite (event) {
+  console.log($(event.target).data('list-id'));
+  var check = $(event.target).hasClass('liked') ? '' : 1;
+  $.ajax({
+    url: '/profile/favorites/' + $(event.target).data('list-id'),
+    method: 'POST',
+    data: {favorite: check}
+    success: function () {
+      // update view
+    }
+  })
+}
+
 $(function() {
   var lists = [
     {title: "Best food in Vancouver", id: 1},
@@ -41,10 +59,14 @@ $(function() {
     {title: "Another one!", id: 3}
   ];
   renderList(lists);
+  $('.favorite').click(favorite)
+
   $.ajax({
     url: '/lists',
     method: 'GET',
     success: renderList
+  }).then(function () {
+    $('.favorite').click(favorite);
   });
   $("input[value='Submit'").click(newList);
 });
