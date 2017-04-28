@@ -40,10 +40,6 @@ function registerNavButton (event) {
   });
 }
 
-function logout () {
-  // toggle buttons
-}
-
 function logoutButton (event) {
   $.ajax({
     url: '/logout',
