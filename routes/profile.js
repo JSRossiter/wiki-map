@@ -15,11 +15,11 @@ module.exports = (knex) => {
   });
 
   router.get("/favorites", authenticateUser, (req, res) => {
-    res.body.favorites = dbGet.getFavoriteLists(req.session.username); // ***Update function name?
+    res.body.favorites = dbGet.getFavoriteLists(req.session.username); // ***Update function
   });
 
   router.get("/contributions", authenticateUser, (req, res) => {
-    res.body.contributions = dbGet.getContributions(req.session.username); // ***Update function name?
+    res.body.contributions = dbGet.getContributions(req.session.username); // ***Update function
   });
 
   router.post("/favorites/:list_title", authenticateUser, (req, res) => {

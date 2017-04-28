@@ -10,7 +10,13 @@ module.exports = (knex) => {
   const dbGet = require("../db/query-db")(knex);
 
   router.get("/", (req, res) => {
-    res.body.lists = dbGet.getLists; // ***Update function?
+    dbGet.getLists().then(function(data) {
+      console.log(data);
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   });
 
   router.post("/new", authenticateUser, (req, res) => {

@@ -3,11 +3,14 @@ function renderList (lists, faves) {
 
   for (list of lists) {
     var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
-    if (faves && faves.find(function (fave) {
-      return fave === list;
-    })) {
-      $faveBtn.addClass('liked');
-    }
+    console.log(faves);
+    // if (faves !== undefined) {
+    //   if (faves.find(function (fave) {
+    //     return fave === list;
+    //   })) {
+    //     $faveBtn.addClass('liked');
+    //   }
+    // }
     $('.lists ul').prepend($('<li>')
       .append($('<a>')
         .attr('href', '/lists/' + list.id)
@@ -64,7 +67,7 @@ $(function() {
     {title: "Best cinemas", id: 2},
     {title: "Another one!", id: 3}
   ];
-  renderList(lists);
+  // renderList(lists);
   $('.favorite').click(favorite);
 
   $.ajax({

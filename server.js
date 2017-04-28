@@ -76,11 +76,6 @@ app.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-// handle 404 errors
-app.use((req, res) => {
-  res.status(404).send("404: Page not Found");
-});
-
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
