@@ -10,7 +10,6 @@ module.exports = (knex) => {
   const dbGet = require("../db/query-db")(knex);
 
   router.get("/", (req, res) => {
-    // get list of lists
     res.body.lists = dbGet.getLists; // ***Update function?
   });
 
