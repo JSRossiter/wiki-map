@@ -22,7 +22,7 @@ module.exports = (knex) => {
   router.post("/new", authenticateUser, (req, res) => {
     console.log(req.body);
     dbInsert.insertList(req.body.title, req.session.user_id).then(data => {
-      res.redirect = ("/lists/" + data[0].id);
+      res.json({ id: data[0] });
     });
   });
 
