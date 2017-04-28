@@ -17,7 +17,7 @@ function addMarkers (points) {
 
 // returns html element to be used as a popup when given a point object
 function createPopup (point) {
-  var $div = $("<div>");
+  var $div = $("<div>").addClass("point-popup");
   var $title = $("<h4>").text(point.title);
   var $edit = $("<a>").text("Edit").click(editPoint);
   var $description = $("<p>").text(point.description);
@@ -58,11 +58,19 @@ function deletePoint (event) {
 
 function editPoint (event) {
   event.preventDefault();
+
+  var title = $('.point-popup h4').text();
+  var description = $('.point-popup p').text();
+  var image = $('.point-popup img').attr('src');
+
   currentMarker.unbindPopup().closePopup();
   currentMarker.dragging.enable();
   currentMarker.bindPopup(newPointForm(currentMarker._latlng, postPointEdit)).openPopup();
 
   $('.new-marker-form').append($('<a>').text("delete").click(deletePoint));
+  $("input[name='title']").val(title)
+  $("input[name='description']").val(description)
+  $("input[name='image']").val(image)
 
   var isDragging = false;
   currentMarker.on('dragstart', function (event) {
@@ -74,7 +82,7 @@ function editPoint (event) {
     currentMarker.setLatLng(coords, {id:10, draggable:'true'});
     currentMarker.openPopup();
     isDragging = false;
-    $("input[name='list']").val(coords.lat + ',' + coords.lng);
+    $("input[name='coords']").val(coords.lat + ',' + coords.lng);
   });
 }
 
@@ -158,7 +166,7 @@ function onMapClick(e) {
     marker.setLatLng(coords,{id:10,draggable:'true'});
     marker.openPopup();
     isDragging = false;
-    $("input[name='list']").val(coords.lat + ',' + coords.lng);
+    $("input[name='coords']").val(coords.lat + ',' + coords.lng);
   });
 
   marker.on('popupclose', function(e) {

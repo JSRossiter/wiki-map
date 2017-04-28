@@ -42,19 +42,19 @@ $(function() {
   ];
   renderList(lists, $('.favorites'));
   renderList(lists, $('.contributions'));
-  // $.ajax({
-  //   url: '/profile/favorites',
-  //   method: 'GET',
-  //   success: function (data) {
-  //     renderList (data, $('.favorites'));
-  //   }
-  // });
-  // $.ajax({
-  //   url: '/profile/contributions',
-  //   method: 'GET',
-  //   success: function (data) {
-  //     renderList (data, $('.contributions'));
-  //   }
-  // });
+  $.ajax({
+    url: '/profile/favorites',
+    method: 'GET',
+    success: function (data) {
+      renderList (data, $('.favorites'));
+    }
+  });
+  $.ajax({
+    url: '/profile/contributions',
+    method: 'GET',
+    success: function (data) {
+      renderList (data, $('.contributions'));
+    }
+  });
   $("input[value='Submit'").click(newList);
 });
