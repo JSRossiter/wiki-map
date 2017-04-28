@@ -1,5 +1,5 @@
 const db = require("./db-connection");
-const insertTables = require("./insert-tables")(db.connect());
+// const insertTables = require("./insert-tables")(db.connect());
 
 module.exports = function(knex) {
   return {
@@ -11,9 +11,10 @@ module.exports = function(knex) {
         removed_at: dateNow
       });
     },
-    contributionsRemovedAt: (contId, dateNow) => {
+    contributionsRemovedAt: (pointId, userId, dateNow) => {
       knex('contributions')
-      .where('contributions.id', '=', contId)
+      .where('contributions.point_id', '=', pointId)
+      .andWhere('contributions.user_id', '=', userId)
       .update({
         removed_at: dateNow
       });

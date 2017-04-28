@@ -2,6 +2,7 @@ const db = require("./db-connection");
 const insertTables = require("./insert-tables")(db.connect());
 const knex = db.connect();
 const queryMethods = require("./query-db")(knex);
+const removePoints = require("./remove-points")(knex);
 
 // GET /lists
 // Return list of lists
@@ -166,11 +167,36 @@ const queryMethods = require("./query-db")(knex);
 //   console.error(error);
 // });
 
+// const userId = 1000;
+// queryMethods.getFavoriteLists(userId)
+// .then(res => {
+//   console.log(res);
+// })
+// .catch(error => {
+//   console.error(error);
+// });
+
+function getDate() {
+  const currTime = new Date().getTime();
+  console.log(currTime);
+  const date = currTime.getDate();
+  const year = currTime.getFullYear();
+  const month = currTime.getMonth();
+  const hour = currTime.getHours();
+  const minutes = currTime.getMinutes();
+  return `${year}-${month}-${date}: ${hour}: ${minutes}`;
+}
+
+// getDate();
+const pointId = 1000;
 const userId = 1000;
-queryMethods.getFavoriteLists(userId)
+
+queryMethods.getOneList(1001)
 .then(res => {
   console.log(res);
 })
-.catch(error => {
+.catch(err => {
   console.error(error);
 });
+
+// removePoints.contributionsRemovedAt()

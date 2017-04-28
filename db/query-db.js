@@ -8,6 +8,12 @@ module.exports = function(knex) {
       return knex.select('lists.title', 'lists.id')
       .from('lists');
     },
+    getOneList: (listId) => {
+      console.log("Getting one list with id ", listId);
+      return knex.select('lists.title', 'lists.id')
+      .from('lists')
+      .where('lists.id', '=', listId);
+    },
     getUserId: (username) => {
       console.log("Getting user_id");
       return knex.select('users.id')
