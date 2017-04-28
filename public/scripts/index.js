@@ -6,12 +6,16 @@ function renderList (lists, faves) {
     })) {
       $faveBtn.addClass('liked');
     }
-    $('.lists ul').prepend($('<li>')
+    var $row = $('<tr>')
+    var $title = $('<td>')
       .append($('<a>')
-        .attr('href', '/lists/' + list.id)
-        .append($('<h2>').text(list.title)))
-      .append($faveBtn)
-    );
+      .attr('href', '/lists/' + list.id)
+      .addClass('list-title')
+      .text(list.title));
+    var $faveBtnCell = $('<td>').append($faveBtn);
+    var $faveCount = $('<td>') // set text to list.faveCount
+    $row.append($title, $faveBtnCell, $faveCount);
+    $('.lists table').append($row);
   }
 }
 
