@@ -10,9 +10,10 @@ module.exports = function(knex) {
       console.log("Inserting into users...");
       return knex.insert({username: firstName}).into('users');
     },
-    insertList: (title) => {
+    insertList: (title, userId) => {
       console.log("Inserting into lists...");
-      return knex.insert({title: title}).into('lists');
+      return knex.returning('id')
+      .insert({title: title, user_id: userId}).into('lists');
     },
     // @params: coord: '40.204942, -123.117063'
     insertPoint: (title, description, image, coord, listId) => {
