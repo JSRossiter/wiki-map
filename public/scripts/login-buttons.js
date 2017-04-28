@@ -10,13 +10,32 @@ function loginNavButton (event) {
   event.preventDefault();
   $('.container').empty();
   $('.container').append(createLoginForm("Login"));
-
+  $('input[type="submit"]').click(function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/login',
+      method: 'POST',
+      data: $('form').serialize(),
+      success: function(data) {
+        console.log(data);
+        window.location.replace("/");
+      }
+    });
+  });
 }
 
 function registerNavButton (event) {
   event.preventDefault();
   $('.container').empty();
   $('.container').append(createLoginForm("Register"));
+  $('input[type="submit"]').click(function (event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/register',
+      method: 'POST',
+      data: $('form').serialize()
+    });
+  });
 }
 
 function logout () {

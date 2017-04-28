@@ -11,7 +11,7 @@ module.exports = (knex) => {
 
   router.get("/", (req, res) => {
     dbGet.getLists().then(data => {
-      console.log(data);
+      console.log("query results from getLists function:\n", data); //***Delete after testing
       res.json(data);
     })
     .catch(error => {
@@ -20,18 +20,20 @@ module.exports = (knex) => {
   });
 
   router.post("/new", authenticateUser, (req, res) => {
-    dbInsert.insertList(req.body.title);
-    let list_id = dbGet.getListId; // ***Update function?
-    // need to query list_id from list that was just inserted
-    res.redirect = ("/lists/" + list_id);
+    dbInsert.insertList(req.body.title).then(data => {
+      res.redirect = ("/lists/" + data[0].id);
+    });
   });
 
   router.get("/:list_id", (req, res) => {
-    let templateVars = {
-      username: req.session.username,
-      list: dbGet.getListTitleById, // ***Update function?
-      list_id: dbGet.getListId // ***Update function?
-    };
+    // *** need new function to query db for single list?
+    dbGet.getList().then(data => {
+      let templateVars = {
+        username: req.session.username,
+        list: data[0].title, // ***Update function?
+        list_id: req.params.list_id
+      };
+    });
     res.render("map", templateVars);
   });
 
