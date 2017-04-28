@@ -61,13 +61,11 @@ $(function() {
   $.ajax({
     url: '/lists',
     method: 'GET',
-  }).then(function (data) {
-    var lists = data
+  }).then(function (lists) {
     $.ajax({
       url: '/profile/favorites',
       method: 'GET'
-    })
-    .then(function (faves) {
+    }).then(function (faves) {
       renderList(lists, faves);
       $('.favorite').click(favorite);
     });
