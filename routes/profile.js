@@ -6,6 +6,7 @@ const authenticateUser = require("./route-helpers");
 
 module.exports = (knex) => {
 
+  const dbRemove = require("../db/remove-favorite")(knex);
   const dbInsert = require("../db/insert-tables")(knex);
   const dbGet = require("../db/query-db")(knex);
 
@@ -39,8 +40,17 @@ module.exports = (knex) => {
     });
   });
 
-  router.post("/favorites/:list_title", authenticateUser, (req, res) => {
+  router.post("/favorites/:list_id", authenticateUser, (req, res) => {
     // create/remove favorite
+    if (req.body.favorite) {
+      dbInsert.insertFavList(req.params.list_id, req.session.user_id).then(() => {
+        res.status(200).send();
+      })
+    } else {
+      dbRemove.removeFavList(req.params.list_id, req.session.user_id).then(() => {
+        res.status(200).send();
+      })
+    }
   });
 
   return router;
