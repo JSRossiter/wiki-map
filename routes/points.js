@@ -28,21 +28,20 @@ module.exports = (knex) => {
   });
 
   router.put("/edit/:point_id", authenticateUser, (req, res) => {
-    // dbInsert.editPoint(  //***Update this function?
-    //   req.params.point_id,
-    //   req.body.title,
-    //   req.body.description,
-    //   req.body.image,
-    //   req.body.coords
-    // ).then(() => {
-    //   let point = [{
-    //     title: req.body.title,
-    //     description: req.body.description,
-    //     image: req.body.image
-    //   }];
-    //   res.status(200).send();
-    // });
-    res.status(200).send();
+    dbUpdate.updatePoints(
+      req.params.point_id,
+      req.body.title,
+      req.body.description,
+      req.body.image,
+      req.body.coords
+    ).then(() => {
+      let point = {
+        title: req.body.title,
+        description: req.body.description,
+        image: req.body.image
+      };
+      res.json(point);
+    });
   });
 
   router.delete("/:point_id", authenticateUser, (req, res) => {

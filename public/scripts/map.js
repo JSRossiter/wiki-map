@@ -120,7 +120,7 @@ function postPointEdit () {
   var $point = $(".new-point-form");
   $.ajax({
     url: '/points/edit/' + $(currentMarker).data("id"),
-    method: 'POST',
+    method: 'PUT',
     data: $point.serialize(),
     success: function (data) {
       currentMarker.dragging.disable();

@@ -27,11 +27,10 @@ module.exports = (knex) => {
   });
 
   router.get("/:list_id", (req, res) => {
-    // *** need new function to query db for single list?
     dbGet.getOneList(req.params.list_id).then(data => {
       let templateVars = {
         username: req.session.username,
-        list: data[0].title, // ***Update function?
+        list: data[0].title,
         list_id: req.params.list_id
       };
       res.render("map", templateVars);
