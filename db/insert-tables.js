@@ -30,5 +30,5 @@ module.exports = function(knex) {
       return knex.insert({point_id: pointId, user_id: userId})
       .into('contributions');
     }
-  }
+  };
 };

@@ -58,7 +58,7 @@ const queryMethods = require("./query-db")(knex);
 //
 // knex.select('lists.title')
 // .from('users')
-// .join('lists', 'users.id', '=', 'lists.creator_id')
+// .join('lists', 'users.id', '=', 'lists.user_id')
 // .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
 // .where('users.id', '=', userId)
 // .then(res => {
