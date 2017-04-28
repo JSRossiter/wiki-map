@@ -168,15 +168,23 @@ const removePoints = require("./update-points")(knex);
 // });
 
 
-const pointId = 1000;
-const title = "ashin";
-const description = "if we never met";
-const imagePath = "www.image.com";
-const coord = "999, 999";
-removePoints.updatePoints(pointId, title, description, imagePath, coord)
+// const pointId = 1000;
+// const title = "ashin";
+// const description = "if we never met";
+// const imagePath = "www.image.com";
+// const coord = "999, 999";
+// removePoints.updatePoints(pointId, title, description, imagePath, coord)
+// .then(res => {
+//   console.log(res);
+// })
+// .catch(err => {
+//   console.log(err);
+// })
+
+queryMethods.getFavoriteCounts()
 .then(res => {
   console.log(res);
 })
-.catch(err => {
-  console.log(err);
+.catch(err =>{
+  console.error(err);
 })
