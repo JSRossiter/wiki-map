@@ -12,8 +12,10 @@ function addMarkers (points) {
     $(marker).click(function (event) { currentMarker = event.target })
     markers.push(marker);
   }
-  var group = new L.featureGroup(markers);
-  map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
+  if (points.length) {
+    var group = new L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
+  }
 }
 
 // returns html element to be used as a popup when given a point object
@@ -69,7 +71,7 @@ function editPoint (event) {
   currentMarker.dragging.enable();
   currentMarker.bindPopup(newPointForm(currentMarker._latlng, postPointEdit)).openPopup();
 
-  $('.new-point-form').append($('<a>').text("delete").click(deletePoint));
+  $('.new-point-form').append($('<button>').text("Delete").click(deletePoint));
   $("input[name='title']").val(title)
   $("input[name='description']").val(description)
   $("input[name='image']").val(image)
@@ -88,19 +90,24 @@ function editPoint (event) {
   });
   currentMarker.on('popupclose', function (event) {
     setTimeout(function() {
-      if (isDragging == false) {
+      if (isDragging === false) {
         var point = {
           title,
           description,
           image
         };
-        currentMarker.setLatLng(coordinates);
-        currentMarker.dragging.disable();
-        currentMarker.off('popupclose');
-        currentMarker.closePopup();
-        currentMarker.unbindPopup();
-        currentMarker.bindPopup(createPopup(point)).openPopup();
+        event.target.setLatLng(coordinates);
+        event.target.dragging.disable();
+        event.target.off('popupclose');
+        event.target.closePopup();
+        event.target.unbindPopup();
+        event.target.bindPopup(createPopup(point));
       }
+    }, 100);
+  });
+  $('.leaflet-popup-close-button').click(function () {
+    setTimeout(function () {
+      currentMarker.openPopup();
     }, 100);
   });
 }
@@ -151,15 +158,18 @@ function newPoint (event) {
 function newPointForm (coordinates, cb) {
   var $div = $("<div>");
   var $form = $("<form>").addClass("new-point-form");
-  var $title = $("<input type='text' name='title'>");
-  var $description = $("<input type='text' name='description'>");
-  var $image = $("<input type='text' name='image'>");
+  var $titleLabel = $("<label>").attr("for", "title").text("Title");
+  var $title = $("<input type='text' name='title' id='title'><br>");
+  var $descriptionLabel = $("<label>").attr("for", "description").text("Description");
+  var $description = $("<input type='text' name='description' id='description'><br>");
+  var $imageLabel = $("<label>").attr("for", "image").text("Image URL");
+  var $image = $("<input type='text' name='image' id='image'><br>");
   // hidden input field for list and coordinates
   var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
   var $list_id = $("<input type='hidden' name='list_id'>").val($('main').data('list-id'));
   var $submit = $("<input type='submit'>");
   $submit.on("click", {post: cb}, newPoint);
-  $form.append($title, $description, $image, $submit)
+  $form.append($titleLabel, $title, $descriptionLabel, $description, $imageLabel, $image, $submit)
   $div.append($form);
   return $div[0];
 }

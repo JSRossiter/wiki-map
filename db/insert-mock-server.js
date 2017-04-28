@@ -124,18 +124,18 @@ const queryMethods = require("./query-db")(knex);
 //   }
 // });
 
-const userId = 1001;
-queryMethods.getFavoriteLists(userId).then(res => {
-  for (let field in res) {
-    if (res.hasOwnProperty(field)) {
-      console.log("Fav list title: ", res[field].title);
-      console.log("fav_list_id ", res[field].id);
-    }
-  }
-})
-.catch(error => {
-  console.error(error);
-});
+// const userId = 1001;
+// queryMethods.getFavoriteLists(userId).then(res => {
+//   for (let field in res) {
+//     if (res.hasOwnProperty(field)) {
+//       console.log("Fav list title: ", res[field].title);
+//       console.log("fav_list_id ", res[field].id);
+//     }
+//   }
+// })
+// .catch(error => {
+//   console.error(error);
+// });
 
 // queryMethods.getContributions(userId).then(res => {
 //   for (let field in res) {
@@ -145,3 +145,23 @@ queryMethods.getFavoriteLists(userId).then(res => {
 //     }
 //   }
 // });
+
+// const title = "Band";
+// // userId must have been created already
+// const userId = 1000;
+// insertTables.insertList(title, userId)
+// .then(res => {
+//   console.log("In promise resolve for insertList", res);
+// })
+// .catch(error => {
+//   console.error(error);
+// });
+
+const username = "maxritcher";
+queryMethods.getUserId(username)
+.then(res => {
+  console.log(res[0].id);
+})
+.catch(error => {
+  console.error(error);
+});
