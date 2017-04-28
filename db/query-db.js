@@ -24,6 +24,7 @@ module.exports = function(knex) {
       console.log("Getting points for", listId);
       return knex.select('*')
       .from('points')
+      .whereNotNull('deleted_at')
       .where('list_id', '=', listId);
     },
     getFavoriteLists: (userId) => {

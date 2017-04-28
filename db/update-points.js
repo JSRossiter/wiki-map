@@ -29,7 +29,6 @@ module.exports = function(knex) {
         'image': imagePath,
         'coordinates': coord
       });
-
     }
   };
 };
