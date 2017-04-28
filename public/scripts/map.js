@@ -55,19 +55,20 @@ function deletePoint (event) {
     }
   });
 }
-
+// TODO closing edit popup reverts
 function editPoint (event) {
   event.preventDefault();
 
   var title = $('.point-popup h4').text();
   var description = $('.point-popup p').text();
   var image = $('.point-popup img').attr('src');
+  var coordinates = currentMarker._latlng;
 
   currentMarker.unbindPopup().closePopup();
   currentMarker.dragging.enable();
   currentMarker.bindPopup(newPointForm(currentMarker._latlng, postPointEdit)).openPopup();
 
-  $('.new-marker-form').append($('<a>').text("delete").click(deletePoint));
+  $('.new-point-form').append($('<a>').text("delete").click(deletePoint));
   $("input[name='title']").val(title)
   $("input[name='description']").val(description)
   $("input[name='image']").val(image)
@@ -76,19 +77,37 @@ function editPoint (event) {
   currentMarker.on('dragstart', function (event) {
     isDragging = true;
   });
-  currentMarker.on('dragend', function(event){
+  currentMarker.on('dragend', function (event){
     currentMarker = event.target;
-    var coords = currentMarker.getLatLng();
-    currentMarker.setLatLng(coords, {id:10, draggable:'true'});
+    var coordinates = currentMarker.getLatLng();
+    currentMarker.setLatLng(coordinates, {id:10, draggable:'true'});
     currentMarker.openPopup();
     isDragging = false;
-    $("input[name='coords']").val(coords.lat + ',' + coords.lng);
+    $("input[name='coordinates']").val(coordinates.lat + ',' + coordinates.lng);
+  });
+  currentMarker.on('popupclose', function (event) {
+    setTimeout(function() {
+      if (isDragging == false) {
+        var point = {
+          title,
+          description,
+          image
+        };
+        currentMarker.setLatLng(coordinates);
+        currentMarker.dragging.disable();
+        currentMarker.off('popupclose');
+        currentMarker.closePopup();
+        currentMarker.unbindPopup();
+        currentMarker.bindPopup(createPopup(point)).openPopup();
+        console.log(point);
+      }
+    }, 100);
   });
 }
 
 
 function postPointEdit () {
-  var $point = $(".new-marker-form");
+  var $point = $(".new-point-form");
   $.ajax({
     url: '/points/edit/' + $(currentMarker).data("id"),
     method: 'POST',
@@ -104,7 +123,7 @@ function postPointEdit () {
 }
 
 function postPoint () {
-  var $point = $(".new-marker-form");
+  var $point = $(".new-point-form");
   $.ajax({
     url: '/points/new',
     method: 'POST',
@@ -130,14 +149,14 @@ function newPoint (event) {
   }
 }
 
-function newPointForm (coords, cb) {
+function newPointForm (coordinates, cb) {
   var $div = $("<div>");
-  var $form = $("<form>").addClass("new-marker-form");
+  var $form = $("<form>").addClass("new-point-form");
   var $title = $("<input type='text' name='title'>");
   var $description = $("<input type='text' name='description'>");
   var $image = $("<input type='text' name='image'>");
-  // hidden input field for list and coords
-  var $coords = $("<input type='hidden' name='coords'>").val(coords.lat + ',' + coords.lng);
+  // hidden input field for list and coordinates
+  var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
   // TODO add list id
   var $list = $("<input type='hidden' name='list'>").val(1);
   var $submit = $("<input type='submit'>");
@@ -162,11 +181,11 @@ function onMapClick(e) {
 
   marker.on('dragend', function(event){
     marker = event.target;
-    var coords = marker.getLatLng();
-    marker.setLatLng(coords,{id:10,draggable:'true'});
+    var coordinates = marker.getLatLng();
+    marker.setLatLng(coordinates,{id:10,draggable:'true'});
     marker.openPopup();
     isDragging = false;
-    $("input[name='coords']").val(coords.lat + ',' + coords.lng);
+    $("input[name='coordinates']").val(coordinates.lat + ',' + coordinates.lng);
   });
 
   marker.on('popupclose', function(e) {
