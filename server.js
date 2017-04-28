@@ -63,14 +63,28 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  req.session.username = req.body.username;
-  res.redirect('/');
+  dbGet.getUserId(req.body.username)
+  .then(data => {
+    req.session.user_id = data[0].id;
+    req.session.username = req.body.username;
+    res.redirect('/');
+  })
+  .catch(error => {
+    console.error(error);
+  });
 });
 
 app.post('/register', (req, res) => {
   // check if user is already in database
-  dbInsert.insertUser(req.body.username); //***Update this function?
-  res.redirect('/');
+  dbInsert.insertUser(req.body.username) //***Update this function?
+  .then(data => {
+    req.session.user_id = data[0].id;
+    req.session.username = req.body.username;
+    res.redirect('/');
+  })
+  .catch(error => {
+    console.error(error);
+  });
 });
 
 app.post('/logout', (req, res) => {

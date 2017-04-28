@@ -14,12 +14,24 @@ module.exports = (knex) => {
     res.render("profile", templateVars);
   });
 
-  router.get("/favorites", authenticateUser, (req, res) => {
-    res.body.favorites = dbGet.getFavoriteLists(req.session.username); // ***Update function
+  router.get("/favorites", (req, res) => {
+    dbGet.getFavoriteLists(req.session.user_id).then(data => {
+      console.log("query results from getFavoriteLists function:\n", data); //***Delete after testing
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   });
 
   router.get("/contributions", authenticateUser, (req, res) => {
-    res.body.contributions = dbGet.getContributions(req.session.username); // ***Update function
+    dbGet.getContributions(req.session.user_id).then(data => {
+      console.log("query results from getContributions function:\n", data); //***Delete after testing
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   });
 
   router.post("/favorites/:list_title", authenticateUser, (req, res) => {

@@ -20,9 +20,8 @@ module.exports = (knex) => {
   });
 
   router.post("/new", authenticateUser, (req, res) => {
-    // *** alter insert function to return list_id
-    dbInsert.insertList(req.body.title).then(list_id => {
-      res.redirect = ("/lists/" + list_id);
+    dbInsert.insertList(req.body.title).then(data => {
+      res.redirect = ("/lists/" + data[0].id);
     });
   });
 
@@ -31,7 +30,7 @@ module.exports = (knex) => {
     dbGet.getList().then(data => {
       let templateVars = {
         username: req.session.username,
-        list: data.title, // ***Update function?
+        list: data[0].title, // ***Update function?
         list_id: req.params.list_id
       };
     });
