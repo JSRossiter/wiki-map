@@ -111,24 +111,25 @@ const queryMethods = require("./query-db")(knex);
 //   console.error(error);
 // });
 //
-const listId = 1;
-queryMethods.getPoints(listId).then(res => {
-  for (let field in res) {
-    if (res.hasOwnProperty(field)) {
-      console.log("title: ", res[field].title);
-      console.log("description: ", res[field].description);
-      console.log("image path: ", res[field].image);
-      console.log("coordinates: ", res[field].coordinates);
-      console.log("list_id: ", res[field].list_id);
-    }
-  }
-});
+// const listId = 1001;
+// queryMethods.getPoints(listId).then(res => {
+//   for (let field in res) {
+//     if (res.hasOwnProperty(field)) {
+//       console.log("title: ", res[field].title);
+//       console.log("description: ", res[field].description);
+//       console.log("image path: ", res[field].image);
+//       console.log("coordinates: ", res[field].coordinates);
+//       console.log("list_id: ", res[field].list_id);
+//     }
+//   }
+// });
 
-const userId = 1;
+const userId = 1001;
 queryMethods.getFavoriteLists(userId).then(res => {
   for (let field in res) {
     if (res.hasOwnProperty(field)) {
-      console.log(res[field].title);
+      console.log("Fav list title: ", res[field].title);
+      console.log("fav_list_id ", res[field].id);
     }
   }
 })
@@ -136,11 +137,11 @@ queryMethods.getFavoriteLists(userId).then(res => {
   console.error(error);
 });
 
-queryMethods.getContributions(userId).then(res => {
-  for (let field in res) {
-    if (res.hasOwnProperty(field)) {
-      console.log(res[field].username);
-      console.log(res[field].id);
-    }
-  }
-});
+// queryMethods.getContributions(userId).then(res => {
+//   for (let field in res) {
+//     if (res.hasOwnProperty(field)) {
+//       console.log(res[field].username);
+//       console.log(res[field].id);
+//     }
+//   }
+// });

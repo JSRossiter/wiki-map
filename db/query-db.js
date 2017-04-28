@@ -12,12 +12,12 @@ module.exports = function(knex) {
       console.log("Getting points for ", listId);
       return knex.select('*')
       .from('points')
-      .join('lists', 'points.list_id', '=', 'lists.id')
+      .join('lists', 'point s.list_id', '=', 'lists.id')
       .where('lists.id', '=', listId);
     },
     getFavoriteLists: (userId) => {
       console.log("Getting favorite lists for ", userId);
-      return knex.select('lists.title, lists.id')
+      return knex.select('lists.id', 'lists.title')
       .from('users')
       .join('lists', 'users.id', '=', 'lists.user_id')
       .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
