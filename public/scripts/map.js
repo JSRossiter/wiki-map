@@ -135,6 +135,7 @@ function postPoint () {
     method: 'POST',
     data: $point.serialize(),
     success: function (data) {
+      console.log("postPoint data:", data);
       marker.dragging.disable();
       marker.off('popupclose');
       marker.closePopup();

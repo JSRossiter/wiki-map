@@ -17,11 +17,11 @@ module.exports = (knex) => {
       req.body.coordinates,
       req.body.list_id
     ).then(() => {
-      let point = [{
+      let point = {
         title: req.body.title,
         description: req.body.description,
         image: req.body.image
-      }];
+      };
       res.json(point);
     });
   });
