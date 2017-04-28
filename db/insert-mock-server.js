@@ -2,7 +2,7 @@ const db = require("./db-connection");
 const insertTables = require("./insert-tables")(db.connect());
 const knex = db.connect();
 const queryMethods = require("./query-db")(knex);
-const removePoints = require("./remove-points")(knex);
+const removePoints = require("./update-points")(knex);
 
 // GET /lists
 // Return list of lists
@@ -167,13 +167,16 @@ const removePoints = require("./remove-points")(knex);
 //   console.error(error);
 // });
 
-const pointId = 1000;
-const userId = 1000;
 
-removePoints.pointsRemovedAt(pointId)
+const pointId = 1000;
+const title = "ashin";
+const description = "if we never met";
+const imagePath = "www.image.com";
+const coord = "999, 999";
+removePoints.updatePoints(pointId, title, description, imagePath, coord)
 .then(res => {
   console.log(res);
 })
-.catch(error => {
-  console.log(error);
-});
+.catch(err => {
+  console.log(err);
+})
