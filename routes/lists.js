@@ -10,7 +10,7 @@ module.exports = (knex) => {
   const dbGet = require("../db/query-db")(knex);
 
   router.get("/", (req, res) => {
-    dbGet.getLists().then(function(data) {
+    dbGet.getLists().then(data => {
       console.log(data);
       res.json(data);
     })
@@ -35,9 +35,11 @@ module.exports = (knex) => {
     res.render("map", templateVars);
   });
 
-  router.get("/:list_title/points", (req, res) => {
-    // how can this pass on the list_id?
-    res.body.points = dbGet.getPoints(list_id); // ***Update function?
+  router.get("/:list_id/points", (req, res) => {
+    dbGet.getPoints(req.params.list_id).then(data => {
+      res.json(data);
+    });
+
   });
 
   return router;
