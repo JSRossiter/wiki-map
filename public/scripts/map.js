@@ -6,7 +6,8 @@ var currentMarker;
 function addMarkers (points) {
   var markers = [];
   for (point of points) {
-    var marker = L.marker(point.coordinates.split(",")).addTo(map).bindPopup(createPopup(point));
+    var coords = L.latLng(point.coordinates.x, point.coordinates.y);
+    var marker = L.marker(coords).addTo(map).bindPopup(createPopup(point));
     $(marker).data("id", point.id);
     $(marker).click(function (event) { currentMarker = event.target })
     markers.push(marker);
@@ -155,8 +156,7 @@ function newPointForm (coordinates, cb) {
   var $image = $("<input type='text' name='image'>");
   // hidden input field for list and coordinates
   var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
-  // TODO add list id
-  var $list_id = $("<input type='hidden' name='list_id'>").val($(main).data('list-id'));
+  var $list_id = $("<input type='hidden' name='list_id'>").val($('main').data('list-id'));
   var $submit = $("<input type='submit'>");
   $submit.on("click", {post: cb}, newPoint);
   $form.append($title, $description, $image, $submit)
@@ -218,20 +218,5 @@ $(document).ready(function() {
   $("#map").height($(window).height() - 150);
   map.invalidateSize();
 
-  var test = [{
-    id: 1,
-    title: "tacofino",
-    description: "some pretty decent tacos",
-    image: "https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg",
-    coordinates: "49.2827202,-123.1048181"
-  },
-  {
-    id: 2,
-    title: "annalena",
-    description: "they have chocolate chicken skin, what else is there to say",
-    image: "http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1492718212399/?format=1500w",
-    coordinates: "49.2708219,-123.1467779"
-  }];
-  addMarkers(test);
   map.on('click', onMapClick);
 });
