@@ -5,7 +5,7 @@ module.exports = function(knex) {
   return {
     getLists: () => {
       console.log("Getting all lists");
-      return knex.select('lists.title, lists.id')
+      return knex.select('lists.title', 'lists.id')
       .from('lists');
     },
     getPoints: (listId) => {
