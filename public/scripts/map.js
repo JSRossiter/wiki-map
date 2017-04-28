@@ -55,7 +55,7 @@ function deletePoint (event) {
     }
   });
 }
-// TODO closing edit popup reverts
+
 function editPoint (event) {
   event.preventDefault();
 
@@ -99,12 +99,10 @@ function editPoint (event) {
         currentMarker.closePopup();
         currentMarker.unbindPopup();
         currentMarker.bindPopup(createPopup(point)).openPopup();
-        console.log(point);
       }
     }, 100);
   });
 }
-
 
 function postPointEdit () {
   var $point = $(".new-point-form");
@@ -158,14 +156,13 @@ function newPointForm (coordinates, cb) {
   // hidden input field for list and coordinates
   var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
   // TODO add list id
-  var $list = $("<input type='hidden' name='list'>").val(1);
+  var $list_id = $("<input type='hidden' name='list_id'>").val($(main).data(listId));
   var $submit = $("<input type='submit'>");
   $submit.on("click", {post: cb}, newPoint);
   $form.append($title, $description, $image, $submit)
   $div.append($form);
   return $div[0];
 }
-
 
 function onMapClick(e) {
   event.preventDefault();
@@ -220,7 +217,6 @@ $(document).ready(function() {
 
   $("#map").height($(window).height() - 150);
   map.invalidateSize();
-
 
   var test = [{
     id: 1,
