@@ -1,8 +1,10 @@
 function renderList (lists, faves) {
   for (list of lists) {
     var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
-    if (typeof faves !== "string" && faves.find(function (fave) {
-      return fave === list;
+    if (faves && faves.find(function (fave) {
+      console.log(fave);
+      console.log(list);
+      return fave == list;
     })) {
       $faveBtn.addClass('liked');
     }

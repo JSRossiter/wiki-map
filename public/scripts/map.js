@@ -4,6 +4,7 @@ var marker;
 var currentMarker;
 // takes an array of point objects, places markers, binds popups and sets view
 function addMarkers (points) {
+  console.log(points);
   var markers = [];
   for (point of points) {
     var coords = L.latLng(point.coordinates.x, point.coordinates.y);
