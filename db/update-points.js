@@ -4,6 +4,7 @@ module.exports = function(knex) {
   return {
     // @param: timestamp
     pointsRemovedAt: (pointsId) => {
+      console.log('Updating point removed at');
       return knex('points')
       .where('points.id', '=', pointsId)
       .update({

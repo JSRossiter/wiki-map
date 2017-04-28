@@ -57,7 +57,7 @@ function deletePoint (event) {
   $.ajax({
     url: '/points/' + $(currentMarker).data("id"),
     method: 'DELETE',
-    succes: function () {
+    success: function () {
       map.removeLayer(currentMarker);
     }
   });
