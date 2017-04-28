@@ -1,5 +1,4 @@
 const db = require("./db-connection");
-// const insertTables = require("./insert-tables")(db.connect());
 
 module.exports = function(knex) {
   return {
