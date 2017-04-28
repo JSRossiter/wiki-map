@@ -7,6 +7,7 @@ const authenticateUser = require("./route-helpers");
 module.exports = (knex) => {
 
   const dbInsert = require("../db/insert-tables")(knex);
+  const dbDelete = require("../db/remove-point")(knex);
 
   router.post("/new", authenticateUser, (req, res) => {
     console.log("POST 'points/new'", req.body);
@@ -45,7 +46,8 @@ module.exports = (knex) => {
   });
 
   router.delete("/:point_id", authenticateUser, (req, res) => {
-    dbHelpers.deletePoint(req.params.point_id); //***Update this function?
+    dbDelete.contributionsRemovedAt()
+    dbDelete.pointsRemovedAt(req.params.point_id)
     res.status(200).send();
   });
 
