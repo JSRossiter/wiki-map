@@ -15,13 +15,13 @@ module.exports = function(knex) {
       .where('username', '=', username);
     },
     getPoints: (listId) => {
-      console.log("Getting points for ", listId);
+      console.log("Getting points for", listId);
       return knex.select('*')
-      .from('points')``
+      .from('points')
       .where('list_id', '=', listId);
     },
     getFavoriteLists: (userId) => {
-      console.log("Getting favorite lists for ", userId);
+      console.log("Getting favorite lists for", userId);
       return knex.select('lists.id', 'lists.title')
       .from('users')
       .join('lists', 'users.id', '=', 'lists.user_id')
@@ -29,7 +29,7 @@ module.exports = function(knex) {
       .where('users.id', '=', userId);
     },
     getContributions: (userId) => {
-      console.log("Getting contributions for ", userId);
+      console.log("Getting contributions for", userId);
       return knex.select('username', 'users.id')
       .from('users')
       .join('contributions', 'users.id', '=', 'contributions.user_id')
