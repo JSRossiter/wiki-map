@@ -88,18 +88,18 @@ function editPoint (event) {
   });
   currentMarker.on('popupclose', function (event) {
     setTimeout(function() {
-      if (isDragging == false) {
+      if (isDragging === false) {
         var point = {
           title,
           description,
           image
         };
-        currentMarker.setLatLng(coordinates);
-        currentMarker.dragging.disable();
-        currentMarker.off('popupclose');
-        currentMarker.closePopup();
-        currentMarker.unbindPopup();
-        currentMarker.bindPopup(createPopup(point)).openPopup();
+        event.target.setLatLng(coordinates);
+        event.target.dragging.disable();
+        event.target.off('popupclose');
+        event.target.closePopup();
+        event.target.unbindPopup();
+        event.target.bindPopup(createPopup(point)).openPopup();
       }
     }, 100);
   });
