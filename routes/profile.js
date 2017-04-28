@@ -15,13 +15,18 @@ module.exports = (knex) => {
   });
 
   router.get("/favorites", (req, res) => {
-    dbGet.getFavoriteLists(req.session.user_id).then(data => {
-      console.log("query results from getFavoriteLists function:\n", data); //***Delete after testing
-      res.json(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    console.log("getting favs ...");
+    if (req.session.user_id) {
+      dbGet.getFavoriteLists(req.session.user_id).then(data => {
+        console.log("query results from getFavoriteLists function:\n", data); //***Delete after testing
+        res.json(data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    } else {
+      res.json([]);
+    }
   });
 
   router.get("/contributions", authenticateUser, (req, res) => {

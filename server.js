@@ -23,7 +23,8 @@ const pointRoutes   = require('./routes/points');
 
 // Helper functions
 const routeHelpers  = require('./routes/route-helpers');
-const dbInsert      = require('./db/insert-tables')(knex); //***Update const/file names?
+const dbInsert      = require('./db/insert-tables')(knex);
+const dbGet         = require('./db/query-db')(knex);
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -58,6 +59,7 @@ app.use('/points', pointRoutes(knex));
 
 
 app.get('/', (req, res) => {
+  console.log("getting home ...");
   let templateVars = { username: req.session.username };
   res.render('index', templateVars);
 });

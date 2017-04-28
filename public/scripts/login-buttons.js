@@ -15,7 +15,11 @@ function loginNavButton (event) {
     $.ajax({
       url: '/login',
       method: 'POST',
-      data: $('form').serialize()
+      data: $('form').serialize(),
+      success: function(data) {
+        console.log(data);
+        window.location.replace("/");
+      }
     });
   });
 }
