@@ -22,12 +22,15 @@ function addMarkers (points) {
 function createPopup (point) {
   var $div = $("<div>").addClass("point-popup");
   var $title = $("<h4>").text(point.title);
-  var $edit = $("<a>").text("Edit").click(editPoint);
   var $description = $("<p>").text(point.description);
-  $div.append($title, $edit, $description);
+  $div.append($title, $description);
   if(point.image) {
     var $img = $("<img>").attr("src", point.image).width(100);
     $div.append($img);
+  }
+  if($('.logged-in').length) {
+    var $edit = $("<a>").text("Edit").click(editPoint);
+    $div.append($edit);
   }
   return $div[0];
 }
@@ -50,6 +53,7 @@ function isValidImageUrl(url, callback) {
 }
 
 function deletePoint (event) {
+  event.preventDefault();
   $.ajax({
     url: '/points/' + $(currentMarker).data("id"),
     method: 'DELETE',
@@ -141,6 +145,7 @@ function postPoint () {
       marker.closePopup();
       marker.unbindPopup();
       marker.bindPopup(createPopup(data)).openPopup();
+      currentMarker = marker;
     }
   });
 }
@@ -228,6 +233,7 @@ $(document).ready(function() {
 
   $("#map").height($(window).height() - 150);
   map.invalidateSize();
-
-  map.on('click', onMapClick);
+  if($('.logged-in').length) {
+    map.on('click', onMapClick);
+  }
 });
