@@ -1,12 +1,18 @@
-function renderList (lists) {
+function renderList (lists, faves) {
   $('.lists').append($('<ul>'));
 
   for (list of lists) {
+    var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
+    if (faves.find(function (fave) {
+      return fave === list;
+    })) {
+      $faveBtn.addClass('liked');
+    }
     $('.lists ul').prepend($('<li>')
       .append($('<a>')
         .attr('href', '/lists/' + list.id)
         .append($('<h2>').text(list.title)))
-      .append($('<a>').text('Fave').addClass('favorite').data('list-id', list.id))
+      .append($faveBtn);
     );
   }
 }
@@ -47,9 +53,9 @@ function favorite (event) {
     method: 'POST',
     data: {favorite: check}
     success: function () {
-      // update view
+      $(event.target).toggleClass('liked');
     }
-  })
+  });
 }
 
 $(function() {
@@ -59,7 +65,7 @@ $(function() {
     {title: "Another one!", id: 3}
   ];
   renderList(lists);
-  $('.favorite').click(favorite)
+  $('.favorite').click(favorite);
 
   $.ajax({
     url: '/lists',
