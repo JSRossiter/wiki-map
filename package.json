@@ -24,6 +24,6 @@
   "devDependencies": {
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
-    "nodemon": "^1.11.0",
+    "nodemon": "^1.11.0"
   }
 }
