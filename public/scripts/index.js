@@ -3,7 +3,7 @@ function renderList (lists, faves) {
 
   for (list of lists) {
     var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
-    if (faves.find(function (fave) {
+    if (faves && faves.find(function (fave) {
       return fave === list;
     })) {
       $faveBtn.addClass('liked');
@@ -12,7 +12,7 @@ function renderList (lists, faves) {
       .append($('<a>')
         .attr('href', '/lists/' + list.id)
         .append($('<h2>').text(list.title)))
-      .append($faveBtn);
+      .append($faveBtn)
     );
   }
 }
@@ -51,7 +51,7 @@ function favorite (event) {
   $.ajax({
     url: '/profile/favorites/' + $(event.target).data('list-id'),
     method: 'POST',
-    data: {favorite: check}
+    data: {favorite: check},
     success: function () {
       $(event.target).toggleClass('liked');
     }
