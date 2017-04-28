@@ -6,7 +6,7 @@ const authenticateUser = require("./route-helpers");
 
 module.exports = (knex) => {
 
-  const dbHelpers = require("../db/insert-tables")(knex);
+  const dbInsert = require("../db/insert-tables")(knex);
 
   router.post("/new", authenticateUser, (req, res) => {
     dbHelpers.insertPoint(
