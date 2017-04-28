@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Wiki Map</title>
+<head>
+  <title>Wiki Map</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+  <link rel="stylesheet" href="/vendor/border-box.css">
+  <link rel="stylesheet" href="/styles/layout.css">
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/profile.js"></script>
-    <script type="text/javascript" src="/scripts/login-buttons.js"></script>
-  </head>
 
-  <body>
-    <nav class='nav-bar'>
-      <% include partials/_header.ejs %>
-    </nav>
+</head>
 
-    <main class='container'>
-      <div class='favorites'>
-        <h2>Favorite Lists</h2>
-      </div>
-      <div class='contributions'>
-        <h2>Lists contributed to</h2>
-      </div>
-    </main>
-  </body>
+<body>
+  <nav class='nav-bar'>
+    <% include partials/_header.ejs %>
+  </nav>
+
+  <main class='container'>
+    <div class='favorites'>
+      <h2>Favorite Lists</h2>
+    </div>
+    <div class='contributions'>
+      <h2>Lists contributed to</h2>
+    </div>
+  </main>
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src="/scripts/profile.js"></script>
+  <script src="/scripts/login-buttons.js"></script>
+</body>
 </html>
