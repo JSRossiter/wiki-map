@@ -20,21 +20,22 @@ module.exports = (knex) => {
   });
 
   router.post("/new", authenticateUser, (req, res) => {
-    dbInsert.insertList(req.body.title).then(data => {
+    console.log(req.body);
+    dbInsert.insertList(req.body.title, req.session.user_id).then(data => {
       res.redirect = ("/lists/" + data[0].id);
     });
   });
 
   router.get("/:list_id", (req, res) => {
     // *** need new function to query db for single list?
-    dbGet.getList().then(data => {
+    dbGet.getOneList(req.params.list_id).then(data => {
       let templateVars = {
         username: req.session.username,
         list: data[0].title, // ***Update function?
         list_id: req.params.list_id
       };
+      res.render("map", templateVars);
     });
-    res.render("map", templateVars);
   });
 
   router.get("/:list_id/points", (req, res) => {

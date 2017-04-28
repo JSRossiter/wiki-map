@@ -35,13 +35,6 @@ function newList (event) {
 }
 
 $(function() {
-  var lists = [
-    {title: "Best food in Vancouver", id: 1},
-    {title: "Best cinemas", id: 2},
-    {title: "Another one!", id: 3}
-  ];
-  renderList(lists, $('.favorites'));
-  renderList(lists, $('.contributions'));
   $.ajax({
     url: '/profile/favorites',
     method: 'GET',

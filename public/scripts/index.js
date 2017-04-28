@@ -27,7 +27,7 @@ function flashMessage (message) {
 
 function newList (event) {
   event.preventDefault();
-  var $title = $("input[name='list']");
+  var $title = $("input[name='title']");
   if (!$title[0].value) {
     flashMessage("You didn't type anything!");
   } else {

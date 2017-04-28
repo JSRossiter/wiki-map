@@ -135,6 +135,7 @@ function postPoint () {
     method: 'POST',
     data: $point.serialize(),
     success: function (data) {
+      console.log("postPoint data:", data);
       marker.dragging.disable();
       marker.off('popupclose');
       marker.closePopup();
@@ -169,7 +170,7 @@ function newPointForm (coordinates, cb) {
   var $list_id = $("<input type='hidden' name='list_id'>").val($('main').data('list-id'));
   var $submit = $("<input type='submit'>");
   $submit.on("click", {post: cb}, newPoint);
-  $form.append($titleLabel, $title, $descriptionLabel, $description, $imageLabel, $image, $submit)
+  $form.append($titleLabel, $title, $descriptionLabel, $description, $imageLabel, $image, $coordinates, $list_id, $submit)
   $div.append($form);
   return $div[0];
 }
