@@ -12,8 +12,7 @@ module.exports = function(knex) {
       console.log("Getting points for ", listId);
       return knex.select('*')
       .from('points')
-      .join('lists', 'points.list_id', '=', 'lists.id')
-      .where('lists.id', '=', listId);
+      .where('list_id', '=', listId);
     },
     getFavoriteLists: (userId) => {
       console.log("Getting favorite lists for ", userId);
