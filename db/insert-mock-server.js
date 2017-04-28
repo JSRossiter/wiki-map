@@ -146,12 +146,21 @@ const queryMethods = require("./query-db")(knex);
 //   }
 // });
 
-const title = "Band";
-// userId must have been created already
-const userId = 1000;
-insertTables.insertList(title, userId)
+// const title = "Band";
+// // userId must have been created already
+// const userId = 1000;
+// insertTables.insertList(title, userId)
+// .then(res => {
+//   console.log("In promise resolve for insertList", res);
+// })
+// .catch(error => {
+//   console.error(error);
+// });
+
+const username = "maxritcher";
+queryMethods.getUserId(username)
 .then(res => {
-  console.log("In promise resolve for insertList", res);
+  console.log(res[0].id);
 })
 .catch(error => {
   console.error(error);

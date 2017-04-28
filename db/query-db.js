@@ -8,10 +8,16 @@ module.exports = function(knex) {
       return knex.select('lists.title', 'lists.id')
       .from('lists');
     },
+    getUserId: (username) => {
+      console.log("Getting user_id");
+      return knex.select('users.id')
+      .from('users')
+      .where('username', '=', username);
+    },
     getPoints: (listId) => {
       console.log("Getting points for ", listId);
       return knex.select('*')
-      .from('points')
+      .from('points')``
       .where('list_id', '=', listId);
     },
     getFavoriteLists: (userId) => {
