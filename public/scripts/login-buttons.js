@@ -17,7 +17,6 @@ function loginNavButton (event) {
       method: 'POST',
       data: $('form').serialize(),
       success: function(data) {
-        console.log(data);
         window.location.replace("/");
       }
     });
@@ -33,7 +32,10 @@ function registerNavButton (event) {
     $.ajax({
       url: '/register',
       method: 'POST',
-      data: $('form').serialize()
+      data: $('form').serialize(),
+      success: function(data) {
+        window.location.replace("/");
+      }
     });
   });
 }
@@ -46,7 +48,9 @@ function logoutButton (event) {
   $.ajax({
     url: '/logout',
     method: 'POST',
-    success: logout
+    success: function(data) {
+      window.location.replace("/");
+    }
   })
 }
 
