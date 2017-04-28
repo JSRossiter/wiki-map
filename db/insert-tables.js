@@ -6,9 +6,6 @@ const db = require("./db-connection");
 // module.exports = function()...
 module.exports = function(knex) {
   return {
-    //***
-    // return id after insert - https://github.com/tgriesser/knex/issues/732
-    // http://knexjs.org/#Builder-returning
 
     insertUser: (firstName) => {
       console.log("Inserting into users...");
