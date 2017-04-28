@@ -5,7 +5,7 @@ module.exports = function(knex) {
   return {
     getLists: () => {
       console.log("Getting all lists");
-      return knex.select('lists.title')
+      return knex.select('lists.title, lists.id')
       .from('lists');
     },
     getPoints: (listId) => {
@@ -17,9 +17,9 @@ module.exports = function(knex) {
     },
     getFavoriteLists: (userId) => {
       console.log("Getting favorite lists for ", userId);
-      return knex.select('lists.title')
+      return knex.select('lists.title, lists.id')
       .from('users')
-      .join('lists', 'users.id', '=', 'lists.creator_id')
+      .join('lists', 'users.id', '=', 'lists.user_id')
       .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
       .where('users.id', '=', userId);
     },

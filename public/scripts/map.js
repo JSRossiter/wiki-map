@@ -1,10 +1,15 @@
 // initialize map
 var map;
+var marker;
+var currentMarker;
 // takes an array of point objects, places markers, binds popups and sets view
 function addMarkers (points) {
   var markers = [];
   for (point of points) {
-    markers.push(L.marker(point.coordinates).addTo(map).bindPopup(createPopup(point)));
+    var marker = L.marker(point.coordinates.split(",")).addTo(map).bindPopup(createPopup(point));
+    $(marker).data("id", point.id);
+    $(marker).click(function (event) { currentMarker = event.target })
+    markers.push(marker);
   }
   var group = new L.featureGroup(markers);
   map.fitBounds(group.getBounds().pad(0.5), {maxZoom: 15});
@@ -12,10 +17,11 @@ function addMarkers (points) {
 
 // returns html element to be used as a popup when given a point object
 function createPopup (point) {
-  var $div = $("<div>");
+  var $div = $("<div>").addClass("point-popup");
   var $title = $("<h4>").text(point.title);
+  var $edit = $("<a>").text("Edit").click(editPoint);
   var $description = $("<p>").text(point.description);
-  $div.append($title, $description);
+  $div.append($title, $edit, $description);
   if(point.image) {
     var $img = $("<img>").attr("src", point.image).width(100);
     $div.append($img);
@@ -40,53 +46,128 @@ function isValidImageUrl(url, callback) {
   img.src = url;
 }
 
+function deletePoint (event) {
+  $.ajax({
+    url: '/points/' + $(currentMarker).data("id"),
+    method: 'DELETE',
+    succes: function () {
+      map.removeLayer(currentMarker);
+    }
+  });
+}
+
+function editPoint (event) {
+  event.preventDefault();
+
+  var title = $('.point-popup h4').text();
+  var description = $('.point-popup p').text();
+  var image = $('.point-popup img').attr('src');
+  var coordinates = currentMarker._latlng;
+
+  currentMarker.unbindPopup().closePopup();
+  currentMarker.dragging.enable();
+  currentMarker.bindPopup(newPointForm(currentMarker._latlng, postPointEdit)).openPopup();
+
+  $('.new-point-form').append($('<a>').text("delete").click(deletePoint));
+  $("input[name='title']").val(title)
+  $("input[name='description']").val(description)
+  $("input[name='image']").val(image)
+
+  var isDragging = false;
+  currentMarker.on('dragstart', function (event) {
+    isDragging = true;
+  });
+  currentMarker.on('dragend', function (event){
+    currentMarker = event.target;
+    var coordinates = currentMarker.getLatLng();
+    currentMarker.setLatLng(coordinates, {id:10, draggable:'true'});
+    currentMarker.openPopup();
+    isDragging = false;
+    $("input[name='coordinates']").val(coordinates.lat + ',' + coordinates.lng);
+  });
+  currentMarker.on('popupclose', function (event) {
+    setTimeout(function() {
+      if (isDragging == false) {
+        var point = {
+          title,
+          description,
+          image
+        };
+        currentMarker.setLatLng(coordinates);
+        currentMarker.dragging.disable();
+        currentMarker.off('popupclose');
+        currentMarker.closePopup();
+        currentMarker.unbindPopup();
+        currentMarker.bindPopup(createPopup(point)).openPopup();
+      }
+    }, 100);
+  });
+}
+
+function postPointEdit () {
+  var $point = $(".new-point-form");
+  $.ajax({
+    url: '/points/edit/' + $(currentMarker).data("id"),
+    method: 'POST',
+    data: $point.serialize(),
+    success: function (data) {
+      currentMarker.dragging.disable();
+      currentMarker.off('popupclose');
+      currentMarker.closePopup();
+      currentMarker.unbindPopup();
+      currentMarker.bindPopup(createPopup(data)).openPopup();
+    }
+  });
+}
+
+function postPoint () {
+  var $point = $(".new-point-form");
+  $.ajax({
+    url: '/points/new',
+    method: 'POST',
+    data: $point.serialize(),
+    success: function (data) {
+      marker.dragging.disable();
+      marker.off('popupclose');
+      marker.closePopup();
+      marker.unbindPopup();
+      marker.bindPopup(createPopup(data)).openPopup();
+    }
+  });
+}
+
+function newPoint (event) {
+  event.preventDefault();
+  if (!$("input[name='title']").val()) {
+    flashMessage("Please enter a title");
+  } else if ($("input[name='image']").val()) {
+    isValidImageUrl($("input[name='image']").val(), event.data.post)
+  } else {
+    event.data.post();
+  }
+}
+
+function newPointForm (coordinates, cb) {
+  var $div = $("<div>");
+  var $form = $("<form>").addClass("new-point-form");
+  var $title = $("<input type='text' name='title'>");
+  var $description = $("<input type='text' name='description'>");
+  var $image = $("<input type='text' name='image'>");
+  // hidden input field for list and coordinates
+  var $coordinates = $("<input type='hidden' name='coordinates'>").val(coordinates.lat + ',' + coordinates.lng);
+  // TODO add list id
+  var $list_id = $("<input type='hidden' name='list_id'>").val($(main).data('list-id'));
+  var $submit = $("<input type='submit'>");
+  $submit.on("click", {post: cb}, newPoint);
+  $form.append($title, $description, $image, $submit)
+  $div.append($form);
+  return $div[0];
+}
+
 function onMapClick(e) {
   event.preventDefault();
 
-  function postPoint () {
-    var $point = $(".new-marker-form");
-    $.ajax({
-      url: '/points/new',
-      method: 'POST',
-      data: $point.serialize(),
-      success: function (data) {
-        marker.dragging.disable();
-        marker.off('popupclose');
-        marker.closePopup();
-        marker.unbindPopup();
-        marker.bindPopup(createPopup(data)).openPopup();
-      }
-    });
-  }
-
-  function newPoint (event) {
-    event.preventDefault();
-    if (!$("input[name='title']").val()) {
-      flashMessage("Please enter a title");
-    } else if ($("input[name='image']").val()) {
-      isValidImageUrl($("input[name='image']").val(), postPoint)
-    } else {
-      postPoint();
-    }
-  }
-  function newPointForm (coords) {
-    var $div = $("<div>");
-    var $form = $("<form>").addClass("new-marker-form");
-    var $title = $("<input type='text' name='title'>");
-    var $description = $("<input type='text' name='description'>");
-    var $image = $("<input type='text' name='image'>");
-    // hidden input field for list and coords
-    var $coords = $("<input type='hidden' name='coords'>").val(coords.lat + ', ' + coords.lng);
-    // TODO add list id
-    var $list = $("<input type='hidden' name='list'>").val(1);
-    var $submit = $("<input type='submit'>");
-    $submit.on("click", newPoint);
-    $form.append($title, $description, $image, $submit)
-    $div.append($form);
-    return $div[0];
-  }
-
-  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newPointForm(e.latlng), {
+  marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newPointForm(e.latlng, postPoint), {
     closeOnClick: false,
     keepInView: true
   });
@@ -96,12 +177,12 @@ function onMapClick(e) {
   });
 
   marker.on('dragend', function(event){
-    var marker = event.target;
-    var coords = marker.getLatLng();
-    marker.setLatLng(coords,{id:10,draggable:'true'});
+    marker = event.target;
+    var coordinates = marker.getLatLng();
+    marker.setLatLng(coordinates,{id:10,draggable:'true'});
     marker.openPopup();
     isDragging = false;
-    $("input[name='list']").val(coords.lat + ', ' + coords.lng);
+    $("input[name='coordinates']").val(coordinates.lat + ',' + coordinates.lng);
   });
 
   marker.on('popupclose', function(e) {
@@ -137,18 +218,19 @@ $(document).ready(function() {
   $("#map").height($(window).height() - 150);
   map.invalidateSize();
 
-
   var test = [{
+    id: 1,
     title: "tacofino",
     description: "some pretty decent tacos",
     image: "https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg",
-    coordinates: [49.2827202, -123.1048181]
+    coordinates: "49.2827202,-123.1048181"
   },
   {
+    id: 2,
     title: "annalena",
     description: "they have chocolate chicken skin, what else is there to say",
     image: "http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1492718212399/?format=1500w",
-    coordinates: [49.2708219, -123.1467779]
+    coordinates: "49.2708219,-123.1467779"
   }];
   addMarkers(test);
   map.on('click', onMapClick);
