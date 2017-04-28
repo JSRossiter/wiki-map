@@ -33,7 +33,7 @@ module.exports = (knex) => {
       req.body.title,
       req.body.description,
       req.body.image,
-      req.body.coords
+      req.body.coordinates
     ).then(() => {
       let point = {
         title: req.body.title,
