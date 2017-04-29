@@ -15,6 +15,9 @@ exports.seed = function(knex, Promise) {
   .then(() => {
     return knex('users').del();
   })
+  .then(() => {
+    return knex('private_list_access').del();
+  })
   .then(function () {
     return Promise.all([
       knex('users').insert({id: 1000, username: 'maxritcher'}),
@@ -33,7 +36,9 @@ exports.seed = function(knex, Promise) {
       knex('lists').insert({id: 1001, title: 'Restaurant', user_id: 1000}),
       knex('lists').insert({id: 1002, title: 'Sports', user_id: 1001}),
       knex('lists').insert({id: 1003, title: 'Music', user_id: 1001}),
-      knex('lists').insert({id: 1004, title: 'School', user_id: 1001})
+      knex('lists').insert({id: 1004, title: 'School', user_id: 1001}),
+      knex('lists').insert({id: 1005, title: 'Private1', user_id: 1006, private: 'true'}),
+      knex('lists').insert({id: 1006, title: 'Private2', user_id: 1006, private: 'true'})
     ]);
   })
   .then(function () {
@@ -99,6 +104,13 @@ exports.seed = function(knex, Promise) {
       knex('fav_lists').insert({id: 1008, list_id: 1003, user_id: 1006}),
       knex('fav_lists').insert({id: 1009, list_id: 1003, user_id: 1004}),
       knex('fav_lists').insert({id: 1010, list_id: 1003, user_id: 1005})
+    ]);
+  })
+  .then(function () {
+    return Promise.all([
+      knex('private_list_access').insert({id: 1000, list_id: 1005, user_id: 1006}),
+      knex('private_list_access').insert({id: 1002, list_id: 1006, user_id: 1006}),
+      knex('private_list_access').insert({id: 1003, list_id: 1005, user_id: 1001})
     ]);
   })
   .then(function () {
