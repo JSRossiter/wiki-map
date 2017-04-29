@@ -6,7 +6,7 @@ function renderList (lists, faves) {
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
-    var $faveCount = $('<td>'); // set text to list.faveCount
+    var $faveCount = $('<td>').addClass('counter').text(list.count);
     $row.append($title, $faveCount);
     if($('.logged-in').length) {
       var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
@@ -58,6 +58,12 @@ function favorite (event) {
     data: {favorite: check},
     success: function () {
       $(event.target).toggleClass('liked');
+      var $counter = $(event.target).closest('tr').find('.counter');
+      if (check) {
+        $counter.text(parseInt($counter.text(), 10) + 1);
+      } else {
+        $counter.text(parseInt($counter.text(), 10) - 1);
+      }
     }
   });
 }

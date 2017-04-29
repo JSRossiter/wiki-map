@@ -36,12 +36,12 @@ module.exports = function(knex) {
     },
     getFavoriteCounts: () => {
       console.log('Getting favorites counts');
-      return knex.select('lists.title', 'lists.user_id')
-      .count('lists.title')
+      return knex.select('lists.title', 'lists.id')
+      .count('fav_lists.list_id').as('count')
       .from('lists')
       .leftJoin('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
-      .groupBy('lists.user_id', 'lists.title')
-      .orderBy('lists.title');
+      .groupBy('lists.id', 'lists.title')
+      .orderBy('count', 'desc');
     },
     getContributions: (userId) => {
       console.log('Getting contributions for', userId);
