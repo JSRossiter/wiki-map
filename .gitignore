@@ -4,3 +4,5 @@ public/styles
 .env
 *.log
 *.sqlite3
+../server-karl.js
+profile_karl.js

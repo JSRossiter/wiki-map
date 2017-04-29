@@ -19,7 +19,13 @@ exports.seed = function(knex, Promise) {
     return Promise.all([
       knex('users').insert({id: 1000, username: 'maxritcher'}),
       knex('users').insert({id: 1001, username: 'mayingjeou'}),
-      knex('users').insert({id: 1002, username: 'ludovico'})
+      knex('users').insert({id: 1002, username: 'ludovico'}),
+      knex('users').insert({id: 1006, username: 'jack'}),
+      knex('users').insert({id: 1007, username: 'george'}),
+      knex('users').insert({id: 1008, username: 'amber'}),
+      knex('users').insert({id: 1009, username: 'alvin'}),
+      knex('users').insert({id: 1005, username: 'brit'}),
+      knex('users').insert({id: 1004, username: 'person'})
     ]);
   })
   .then(function () {
@@ -83,16 +89,16 @@ exports.seed = function(knex, Promise) {
   .then(function () {
     return Promise.all([
       knex('fav_lists').insert({id: 1000, list_id: 1001, user_id: 1000}),
-      knex('fav_lists').insert({id: 1001, list_id: 1001, user_id: 1000}),
-      knex('fav_lists').insert({id: 1002, list_id: 1001, user_id: 1000}),
-      knex('fav_lists').insert({id: 1003, list_id: 1001, user_id: 1000}),
+      knex('fav_lists').insert({id: 1001, list_id: 1001, user_id: 1009}),
+      knex('fav_lists').insert({id: 1002, list_id: 1001, user_id: 1008}),
+      knex('fav_lists').insert({id: 1003, list_id: 1001, user_id: 1007}),
       knex('fav_lists').insert({id: 1004, list_id: 1002, user_id: 1000}),
       knex('fav_lists').insert({id: 1005, list_id: 1002, user_id: 1001}),
       knex('fav_lists').insert({id: 1006, list_id: 1003, user_id: 1001}),
       knex('fav_lists').insert({id: 1007, list_id: 1003, user_id: 1002}),
-      knex('fav_lists').insert({id: 1008, list_id: 1003, user_id: 1002}),
-      knex('fav_lists').insert({id: 1009, list_id: 1003, user_id: 1002}),
-      knex('fav_lists').insert({id: 1010, list_id: 1003, user_id: 1002})
+      knex('fav_lists').insert({id: 1008, list_id: 1003, user_id: 1006}),
+      knex('fav_lists').insert({id: 1009, list_id: 1003, user_id: 1004}),
+      knex('fav_lists').insert({id: 1010, list_id: 1003, user_id: 1005})
     ]);
   })
   .then(function () {

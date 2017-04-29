@@ -19,7 +19,8 @@ module.exports = function(knex) {
     // @params: coord: '40.204942, -123.117063'
     insertPoint: (title, description, image, coord, listId) => {
       console.log("Inserting into points...");
-      return knex.insert({title: title, description: description, image: image, coordinates: coord, list_id: listId})
+      return knex.returning('id')
+      .insert({title: title, description: description, image: image, coordinates: coord, list_id: listId})
       .into('points');
     },
     insertFavList: (listId, userId) => {
