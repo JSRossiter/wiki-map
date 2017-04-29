@@ -40,6 +40,16 @@ module.exports = (knex) => {
     });
   });
 
+  router.get('/private_lists', authenticateUser, (req, res) => {
+    dbGet.getPrivateLists(req.session.user_id).then(data => {
+      console.log('query results from getPrivateLists function:\n', data); //***Delete after testing
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  });
+
   router.post('/favorites/:list_id', authenticateUser, (req, res) => {
     if (req.body.favorite) {
       dbInsert.insertFavList(req.params.list_id, req.session.user_id).then(() => {
@@ -50,6 +60,16 @@ module.exports = (knex) => {
         res.status(200).send();
       });
     }
+  });
+
+  // TODO refactor query to accept username
+  router.post('/private_lists/:list_id', authenticateUser, (req, res) => {
+    db.getUserId(req.body.user_id).then(() => {
+      return dbInsert.insertAccess(req.params.list_id, data[0]);
+    })
+    .then(() => {
+      res.status(200).send();
+    });
   });
 
   return router;

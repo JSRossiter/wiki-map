@@ -39,14 +39,24 @@ $(function() {
     url: '/profile/favorites',
     method: 'GET',
     success: function (data) {
-      renderList (data, $('.favorites'));
+      renderList(data, $('.favorites'));
     }
   });
   $.ajax({
     url: '/profile/contributions',
     method: 'GET',
     success: function (data) {
-      renderList (data, $('.contributions'));
+      renderList(data, $('.contributions'));
+    }
+  });
+  $.ajax({
+    url: '/profile/private_lists',
+    method: 'GET',
+    success: function (data) {
+      if (data.length) {
+        $('.private').append($('<h2>').text('My Private Lists'));
+        renderList(data, $('.private'));
+      }
     }
   });
   $("input[value='Submit'").click(newList);
