@@ -11,7 +11,7 @@ module.exports = (knex) => {
 
   router.get('/', (req, res) => {
     dbGet.getFavoriteCounts().then(data => {
-      console.log("query results from getLists function:\n", data); //***Delete after testing
+      console.log("query results from getFavoriteCounts function:\n", data); //***Delete after testing
       res.json(data);
     })
     .catch(error => {
