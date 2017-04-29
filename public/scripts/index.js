@@ -44,6 +44,9 @@ function newList (event) {
       data: $(event.target).closest('form').serialize(),
       success: function (data) {
         window.location.replace("/lists/" + data.id);
+      },
+      error: function (error) {
+        flashMessage(JSON.parse(error.responseText).message);
       }
     });
   }

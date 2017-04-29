@@ -2,26 +2,24 @@
 
 const express = require('express');
 const router  = express.Router();
-const authenticateUser = require('./route-helpers');
 
 module.exports = (knex) => {
 
+  const {authenticateUser} = require('./route-helpers')(knex);
   const dbInsert = require('../db/insert-tables')(knex);
   const dbGet = require('../db/query-db')(knex);
 
-  router.get('/', (req, res) => {
+  router.get('/', (req, res, next) => {
     dbGet.getFavoriteCounts().then(data => {
-      console.log("query results from getFavoriteCounts function:\n", data); //***Delete after testing
       res.json(data);
     })
     .catch(error => {
-      console.error(error);
+      error.status = 500;
+      next(error);
     });
   });
 
-  router.post('/new', authenticateUser, (req, res) => {
-    console.log(req.body);
-
+  router.post('/new', authenticateUser, (req, res, next) => {
     dbInsert.insertList(req.body.title, req.session.user_id, req.body.private).then(data => {
       if (req.body.private === "true") {
         return dbInsert.insertAccess(data[0], req.session.user_id);
@@ -30,22 +28,31 @@ module.exports = (knex) => {
       }
     }).then(data => {
       res.json({ id: data[0] });
+    }).catch(error => {
+      error.status = 500;
+      next(error);
     });
   });
 
-  router.get('/:list_id/access', (req, res) => {
+  router.get('/:list_id/access', (req, res, next) => {
     dbGet.getAccess(req.params.list_id).then(data => {
       res.json(data);
-    })
-  })
-
-  router.get('/:list_id/points', (req, res) => {
-    dbGet.getPoints(req.params.list_id).then(data => {
-      res.json(data);
+    }).catch(error => {
+      error.status = 500;
+      next(error);
     });
   });
 
-  router.get('/:list_id', (req, res) => {
+  router.get('/:list_id/points', (req, res, next) => {
+    dbGet.getPoints(req.params.list_id).then(data => {
+      res.json(data);
+    }).catch(error => {
+      error.status = 500;
+      next(error);
+    });
+  });
+
+  router.get('/:list_id', (req, res, next) => {
     dbGet.getOneList(req.params.list_id).then(data => {
       let templateVars = {
         username: req.session.username,
@@ -54,6 +61,9 @@ module.exports = (knex) => {
         private: data[0].private
       };
       res.render('map', templateVars);
+    }).catch(error => {
+      error.status = 500;
+      next(error);
     });
   });
 

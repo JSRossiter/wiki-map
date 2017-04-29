@@ -55,7 +55,6 @@ function addProtocol (url) {
 
 function isValidImageUrl(url, callback) {
   var testImage = new Image();
-  console.log(testImage);
   testImage.onerror = function() {
     flashMessage("Please enter a valid image URL") }
   testImage.onload = callback;
@@ -198,6 +197,9 @@ function giveAccess (event) {
     success: function () {
       flashMessage('Access granted to ' + $('#access').val());
       $('#access').val('');
+    },
+    error: function (error) {
+      flashMessage(JSON.parse(error.responseText).message);
     }
   })
 }
@@ -214,7 +216,7 @@ function onMapClick (e) {
     isDragging = true;
   });
 
-  marker.on('dragend', function(event){
+  marker.on('dragend', function (event){
     marker = event.target;
     var coordinates = marker.getLatLng();
     marker.setLatLng(coordinates,{id:10,draggable:'true'});
