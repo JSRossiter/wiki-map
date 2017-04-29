@@ -27,6 +27,12 @@ module.exports = function(knex) {
       console.log("Inserting into contributions...");
       return knex.insert({point_id: pointId, user_id: userId})
       .into('contributions');
+    },
+    insertPointsEditHistory: (pointId, columnName, oldVal, newVal) => {
+      console.log("Inserting into points_edit_history");
+      return knex.insert({point_id: pointId, column_name: columnName,
+      old_value: oldVal, new_value: newVal, updated_at: knex.raw('current_timestamp')})
+      .into('points_edit_history');
     }
   };
 };
