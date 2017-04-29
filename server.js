@@ -59,7 +59,7 @@ app.use('/points', pointRoutes(knex));
 
 
 app.get('/', (req, res) => {
-  console.log("getting home ...");
+  console.log('getting home ...');
   let templateVars = { username: req.session.username };
   res.render('index', templateVars);
 });
@@ -77,7 +77,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-  // check if user is already in database
+  // does not check if user is already in database
   dbInsert.insertUser(req.body.username)
   .then(data => {
     req.session.user_id = data[0].id;
