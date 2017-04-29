@@ -25,6 +25,8 @@ module.exports = (knex) => {
     dbInsert.insertList(req.body.title, req.session.user_id, req.body.private).then(data => {
       if (req.body.private === "true") {
         return dbInsert.insertAccess(data[0], req.session.user_id);
+      } else {
+        return data;
       }
     }).then(data => {
       res.json({ id: data[0] });
@@ -48,7 +50,8 @@ module.exports = (knex) => {
       let templateVars = {
         username: req.session.username,
         list: data[0].title,
-        list_id: req.params.list_id
+        list_id: req.params.list_id,
+        private: data[0].private
       };
       res.render('map', templateVars);
     });

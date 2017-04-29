@@ -189,7 +189,20 @@ function newPointForm (coordinates, cb) {
   return $div[0];
 }
 
-function onMapClick(e) {
+function giveAccess (event) {
+  event.preventDefault();
+  $.ajax({
+    url: '/profile/private_lists/' + $('main').data('list-id'),
+    method: 'POST',
+    data: $(event.target).closest('form').serialize(),
+    success: function () {
+      flashMessage('Access granted to ' + $('#access').val());
+      $('#access').val('');
+    }
+  })
+}
+
+function onMapClick (e) {
   event.preventDefault();
 
   marker = new L.marker(e.latlng, {id:10, draggable:'true'}).bindPopup(newPointForm(e.latlng, postPoint), {
@@ -245,4 +258,6 @@ $(document).ready(function() {
   if($('.logged-in').length) {
     map.on('click', onMapClick);
   }
+  console.log()
+  $("input[type='Submit'").click(giveAccess);
 });

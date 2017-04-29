@@ -10,7 +10,7 @@ module.exports = function(knex) {
     },
     getOneList: (listId) => {
       console.log("Getting one list with id ", listId);
-      return knex.select('lists.title', 'lists.id')
+      return knex.select('lists.title', 'lists.id', 'private')
       .from('lists')
       .where('lists.id', '=', listId);
     },

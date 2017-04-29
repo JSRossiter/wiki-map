@@ -11,14 +11,22 @@ $(function() {
     url: '/profile/favorites',
     method: 'GET',
     success: function (data) {
-      renderList(data, $('.favorites'));
+      if (data.length) {
+        renderList(data, $('.favorites'));
+      } else {
+        $('.favorites').append($('<p>').text('Go checkout some of the lists our users have made'));
+      }
     }
   });
   $.ajax({
     url: '/profile/contributions',
     method: 'GET',
     success: function (data) {
-      renderList(data, $('.contributions'));
+      if (data.length) {
+        renderList(data, $('.contributions'));
+      } else {
+        $('.contributions').append($('<p>').text('Go add some points!'));
+      }
     }
   });
   $.ajax({

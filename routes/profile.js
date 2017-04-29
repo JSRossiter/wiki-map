@@ -40,6 +40,18 @@ module.exports = (knex) => {
     });
   });
 
+  // TODO refactor query to accept username
+  router.post('/private_lists/:list_id', authenticateUser, (req, res) => {
+    console.log(req.body);
+    dbGet.getUserId(req.body.access).then(data => {
+      console.log(data[0]);
+      return dbInsert.insertAccess(req.params.list_id, data[0].id);
+    })
+    .then(() => {
+      res.status(200).send();
+    });
+  });
+
   router.get('/private_lists', authenticateUser, (req, res) => {
     dbGet.getPrivateLists(req.session.user_id).then(data => {
       console.log('query results from getPrivateLists function:\n', data); //***Delete after testing
@@ -62,15 +74,7 @@ module.exports = (knex) => {
     }
   });
 
-  // TODO refactor query to accept username
-  router.post('/private_lists/:list_id', authenticateUser, (req, res) => {
-    db.getUserId(req.body.user_id).then(() => {
-      return dbInsert.insertAccess(req.params.list_id, data[0]);
-    })
-    .then(() => {
-      res.status(200).send();
-    });
-  });
+
 
   return router;
 };
