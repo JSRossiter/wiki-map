@@ -57,7 +57,6 @@ function favorite (event) {
     method: 'POST',
     data: {favorite: check},
     success: function () {
-      console.log('success!');
       $(event.target).toggleClass('liked');
     }
   });
