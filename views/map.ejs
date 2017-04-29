@@ -18,6 +18,13 @@
 
   <main class='container' data-list-id='<%= list_id %>'>
     <h1><%= list %></h1>
+    <% if (private === true) { %>
+    <form class='access'>
+      <label for='access'>Give access</label>
+      <input type="text" name="access" id="access">
+      <input type="submit" name="Submit">
+    </form>
+    <% } %>
 
     <div id="map">
 

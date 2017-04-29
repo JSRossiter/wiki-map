@@ -1,25 +1,25 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router  = express.Router();
-const authenticateUser = require("./route-helpers");
+const authenticateUser = require('./route-helpers');
 
 module.exports = (knex) => {
 
-  const dbRemove = require("../db/remove-favorite")(knex);
-  const dbInsert = require("../db/insert-tables")(knex);
-  const dbGet = require("../db/query-db")(knex);
+  const dbRemove = require('../db/remove-favorite')(knex); //***Why move these inside exports object?
+  const dbInsert = require('../db/insert-tables')(knex);
+  const dbGet = require('../db/query-db')(knex);
 
-  router.get("/", (req, res) => {
+  router.get('/', (req, res) => {
     let templateVars = { username: req.session.username };
-    res.render("profile", templateVars);
+    res.render('profile', templateVars);
   });
 
-  router.get("/favorites", (req, res) => {
-    console.log("getting favs ...");
+  router.get('/favorites', (req, res) => {
+    console.log('getting favs ...');
     if (req.session.user_id) {
       dbGet.getFavoriteLists(req.session.user_id).then(data => {
-        console.log("query results from getFavoriteLists function:\n", data); //***Delete after testing
+        console.log('query results from getFavoriteLists function:\n', data); //***Delete after testing
         res.json(data);
       })
       .catch(error => {
@@ -30,9 +30,9 @@ module.exports = (knex) => {
     }
   });
 
-  router.get("/contributions", authenticateUser, (req, res) => {
+  router.get('/contributions', authenticateUser, (req, res) => {
     dbGet.getContributions(req.session.user_id).then(data => {
-      console.log("query results from getContributions function:\n", data); //***Delete after testing
+      console.log('query results from getContributions function:\n', data); //***Delete after testing
       res.json(data);
     })
     .catch(error => {
@@ -40,18 +40,41 @@ module.exports = (knex) => {
     });
   });
 
-  router.post("/favorites/:list_id", authenticateUser, (req, res) => {
-    // create/remove favorite
+  // TODO refactor query to accept username
+  router.post('/private_lists/:list_id', authenticateUser, (req, res) => {
+    console.log(req.body);
+    dbGet.getUserId(req.body.access).then(data => {
+      console.log(data[0]);
+      return dbInsert.insertAccess(req.params.list_id, data[0].id);
+    })
+    .then(() => {
+      res.status(200).send();
+    });
+  });
+
+  router.get('/private_lists', authenticateUser, (req, res) => {
+    dbGet.getPrivateLists(req.session.user_id).then(data => {
+      console.log('query results from getPrivateLists function:\n', data); //***Delete after testing
+      res.json(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  });
+
+  router.post('/favorites/:list_id', authenticateUser, (req, res) => {
     if (req.body.favorite) {
       dbInsert.insertFavList(req.params.list_id, req.session.user_id).then(() => {
         res.status(200).send();
-      })
+      });
     } else {
       dbRemove.removeFavList(req.params.list_id, req.session.user_id).then(() => {
         res.status(200).send();
-      })
+      });
     }
   });
+
+
 
   return router;
 };

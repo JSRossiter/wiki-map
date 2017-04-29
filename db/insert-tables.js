@@ -7,15 +7,16 @@ module.exports = function(knex) {
       return knex.returning('id')
       .insert({username: firstName}).into('users');
     },
-    insertList: (title, userId) => {
+    insertList: (title, userId, private) => {
       console.log("Inserting into lists...");
       return knex.returning('id')
-      .insert({title: title, user_id: userId}).into('lists');
+      .insert({title: title, user_id: userId, private: private}).into('lists');
     },
     // @params: coord: '40.204942, -123.117063'
     insertPoint: (title, description, image, coord, listId) => {
       console.log("Inserting into points...");
-      return knex.insert({title: title, description: description, image: image, coordinates: coord, list_id: listId})
+      return knex.returning('id')
+      .insert({title: title, description: description, image: image, coordinates: coord, list_id: listId})
       .into('points');
     },
     insertFavList: (listId, userId) => {
@@ -27,6 +28,11 @@ module.exports = function(knex) {
       console.log("Inserting into contributions...");
       return knex.insert({point_id: pointId, user_id: userId})
       .into('contributions');
+    },
+    insertAccess: (listId, userId) => {
+      console.log("Inserting into private_list_access...");
+      return knex.insert({list_id: listId, user_id: userId}, "list_id")
+      .into('private_list_access');
     }
   };
 };

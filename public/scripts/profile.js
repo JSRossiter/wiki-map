@@ -6,48 +6,37 @@ function renderList (lists, $container) {
   }
 }
 
-function flashMessage (message) {
-  var span = $("<span>").addClass("flash-message").text(message);
-  $("form").append(span);
-  span.slideDown(function() {
-    setTimeout(function() {
-      span.slideUp();
-    }, 2000);
-  });
-}
-
-function newList (event) {
-  event.preventDefault();
-  var $title = $("input[name='list']");
-  if (!$title[0].value) {
-    flashMessage("You didn't type anything!");
-  } else {
-    $.ajax({
-      url: "/lists/new",
-      method: "POST",
-      data: $title.serialize(),
-      success: function (data) {
-        renderList([data]);
-        $title[0].value = "";
-      }
-    });
-  }
-}
-
 $(function() {
   $.ajax({
     url: '/profile/favorites',
     method: 'GET',
     success: function (data) {
-      renderList (data, $('.favorites'));
+      if (data.length) {
+        renderList(data, $('.favorites'));
+      } else {
+        $('.favorites').append($('<p>').text('Go checkout some of the lists our users have made'));
+      }
     }
   });
   $.ajax({
     url: '/profile/contributions',
     method: 'GET',
     success: function (data) {
-      renderList (data, $('.contributions'));
+      if (data.length) {
+        renderList(data, $('.contributions'));
+      } else {
+        $('.contributions').append($('<p>').text('Go add some points!'));
+      }
     }
   });
-  $("input[value='Submit'").click(newList);
+  $.ajax({
+    url: '/profile/private_lists',
+    method: 'GET',
+    success: function (data) {
+      if (data.length) {
+        $('.private').append($('<h2>').text('My Private Lists'));
+        renderList(data, $('.private'));
+      }
+    }
+  });
 });

@@ -17,7 +17,10 @@
 
   <main class='container'>
     <form>
-      <input type="text" name="title">
+      <label for="title">New List</label>
+      <input id="title" type="text" name="title">
+      <input type="radio" name="private" value="false" checked="true">Public
+      <input type="radio" name="private" value="true">Private
       <input type="submit" value="Submit">
     </form>
     <div class="lists">

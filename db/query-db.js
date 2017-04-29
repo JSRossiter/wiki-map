@@ -3,11 +3,11 @@ module.exports = function(knex) {
     getLists: () => {
       console.log('Getting all lists');
       return knex.select('lists.title', 'lists.id')
-      .from('lists');
+      .from('lists')
     },
     getOneList: (listId) => {
       console.log("Getting one list with id ", listId);
-      return knex.select('lists.title', 'lists.id')
+      return knex.select('lists.title', 'lists.id', 'private')
       .from('lists')
       .where('lists.id', '=', listId);
     },
@@ -33,19 +33,34 @@ module.exports = function(knex) {
     },
     getFavoriteCounts: () => {
       console.log('Getting favorites counts');
-      return knex.select('lists.title', 'lists.user_id')
-      .count('lists.title')
+      return knex.select('lists.title', 'lists.id')
+      .count('fav_lists.list_id').as('count')
       .from('lists')
-      .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
-      .groupBy('lists.user_id', 'lists.title')
-      .orderBy('lists.title');
+      .leftJoin('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
+      .where('lists.private', 'false')
+      .groupBy('lists.id', 'lists.title')
+      .orderBy('count', 'desc');
     },
     getContributions: (userId) => {
       console.log('Getting contributions for', userId);
-      return knex.select('username', 'users.id')
-      .from('users')
-      .join('contributions', 'users.id', '=', 'contributions.user_id')
-      .where('users.id', '=', userId);
+      return knex.distinct('lists.id', 'lists.title')
+      .select()
+      .from('contributions')
+      .join('points', 'points.id', '=', 'contributions.point_id')
+      .join('lists', 'lists.id', '=', 'points.list_id')
+      .where('contributions.user_id', '=', userId);
+    },
+    getPrivateLists: (userId) => {
+      console.log('Getting private lists for', userId);
+      return knex('lists').select('lists.title', 'lists.id')
+      .join('private_list_access', 'private_list_access.list_id', 'lists.id')
+      .where('private_list_access.user_id', userId);
+    },
+    getAccessList: (listId) => {
+      console.log('Getting access list for', listId);
+      return knex('users').select('username')
+      .join('private_list_access', 'private_list_access.user_id', 'users.id')
+      .where('private_list_access.list_id', listId)
     }
   };
 };
