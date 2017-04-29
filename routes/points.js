@@ -17,7 +17,9 @@ module.exports = (knex) => {
       req.body.image,
       req.body.coordinates,
       req.body.list_id
-    ).then(() => {
+    ).then((data) => {
+      return dbInsert.insertContributions(data[0], req.session.user_id);
+    }).then(() => {
       let point = {
         title: req.body.title,
         description: req.body.description,
@@ -35,6 +37,8 @@ module.exports = (knex) => {
       req.body.image,
       req.body.coordinates
     ).then(() => {
+      return dbInsert.insertContributions(req.params.point_id, req.session.user_id);
+    }).then(() => {
       let point = {
         title: req.body.title,
         description: req.body.description,
@@ -45,7 +49,7 @@ module.exports = (knex) => {
   });
 
   router.delete("/:point_id", authenticateUser, (req, res) => {
-    dbUpdate.contributionsRemovedAt(req.params.point_id, req.session.user_id)
+    dbInsert.insertContributions(req.params.point_id, req.session.user_id)
     .then(() => {
       return dbUpdate.pointsRemovedAt(req.params.point_id);
     })
