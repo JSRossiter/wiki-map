@@ -24,6 +24,13 @@ module.exports = function(knex) {
       .whereNull('deleted_at')
       .where('list_id', '=', listId);
     },
+    getOnePoint: (pointId) => {
+      console.log('Getting 1 point\'s information for point', pointId);
+      return knex.select('*')
+      .from('points')
+      .whereNull('deleted_at')
+      .where('points.id', '=', pointId);
+    },
     getFavoriteLists: (userId) => {
       console.log('Getting favorite lists for ', userId);
       return knex.select('lists.id', 'lists.title')
