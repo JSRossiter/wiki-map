@@ -39,13 +39,14 @@ module.exports = function(knex) {
       return knex.select('lists.title', 'lists.user_id')
       .count('lists.title')
       .from('lists')
-      .join('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
+      .leftJoin('fav_lists', 'lists.id', '=', 'fav_lists.list_id')
       .groupBy('lists.user_id', 'lists.title')
       .orderBy('lists.title');
     },
     getContributions: (userId) => {
       console.log('Getting contributions for', userId);
-      return knex.select('lists.id', 'lists.title')
+      return knex.distinct('lists.id', 'lists.title')
+      .select()
       .from('contributions')
       .join('points', 'points.id', '=', 'contributions.point_id')
       .join('lists', 'lists.id', '=', 'points.list_id')

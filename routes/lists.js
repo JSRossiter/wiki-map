@@ -10,7 +10,7 @@ module.exports = (knex) => {
   const dbGet = require("../db/query-db")(knex);
 
   router.get("/", (req, res) => {
-    dbGet.getLists().then(data => {
+    dbGet.getFavoriteCounts().then(data => {
       console.log("query results from getLists function:\n", data); //***Delete after testing
       res.json(data);
     })
