@@ -1,7 +1,3 @@
-const db = require("./db-connection");
-// const firstName = process.argv[2];
-
-
 // Server decides which function to call
 // module.exports = function()...
 module.exports = function(knex) {

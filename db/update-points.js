@@ -1,5 +1,3 @@
-const db = require("./db-connection");
-
 module.exports = function(knex) {
   return {
     // @param: timestamp
