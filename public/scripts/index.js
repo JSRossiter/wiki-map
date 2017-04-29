@@ -1,20 +1,23 @@
 function renderList (lists, faves) {
   for (list of lists) {
-    var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
-    if (typeof faves !== "string" && faves.find(function (fave) {
-      return fave === list;
-    })) {
-      $faveBtn.addClass('liked');
-    }
     var $row = $('<tr>')
     var $title = $('<td>')
       .append($('<a>')
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
-    var $faveBtnCell = $('<td>').append($faveBtn);
-    var $faveCount = $('<td>') // set text to list.faveCount
-    $row.append($title, $faveBtnCell, $faveCount);
+    var $faveCount = $('<td>'); // set text to list.faveCount
+    $row.append($title, $faveCount);
+    if($('.logged-in').length) {
+      var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
+      if (faves && faves.find(function (fave) {
+        return fave.id === list.id;
+      })) {
+        $faveBtn.addClass('liked');
+      }
+      var $faveBtnCell = $('<td>').append($faveBtn);
+      $row.append($faveBtnCell);
+    }
     $('.lists table').append($row);
   }
 }
