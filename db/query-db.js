@@ -29,7 +29,7 @@ module.exports = function(knex) {
       return knex.select('lists.id', 'lists.title')
       .from('lists')
       .join('fav_lists', 'lists.id', '=', 'list_id')
-      .where('lists.user_id', '=', userId);
+      .where('fav_lists.user_id', '=', userId);
     },
     getFavoriteCounts: () => {
       console.log('Getting favorites counts');
