@@ -6,9 +6,10 @@ function renderList (lists, faves) {
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
-    var $faveCount = $('<td>'); // set text to list.faveCount
+    var $faveCount = $('<td>').text(list.count);
     $row.append($title, $faveCount);
     if($('.logged-in').length) {
+      console.log(list.id);
       var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
       if (faves && faves.find(function (fave) {
         return fave.id === list.id;
@@ -52,6 +53,8 @@ function newList (event) {
 function favorite (event) {
   var check = $(event.target).hasClass('liked') ? '' : 1;
   event.preventDefault();
+  console.log(event.target);
+  console.log($(event.target).data('list-id'));
   $.ajax({
     url: '/profile/favorites/' + $(event.target).data('list-id'),
     method: 'POST',
