@@ -29,18 +29,16 @@ module.exports = function(knex) {
       return knex.insert({point_id: pointId, user_id: userId})
       .into('contributions');
     },
-<<<<<<< HEAD
     insertAccess: (listId, userId) => {
       console.log("Inserting into private_list_access...");
       return knex.insert({list_id: listId, user_id: userId}, "list_id")
       .into('private_list_access');
-=======
+    },
     insertPointsEditHistory: (pointId, columnName, oldVal, newVal) => {
       console.log("Inserting into points_edit_history");
       return knex.insert({point_id: pointId, column_name: columnName,
       old_value: oldVal, new_value: newVal, updated_at: knex.raw('current_timestamp')})
       .into('points_edit_history');
->>>>>>> feature/update-at
     }
   };
 };
