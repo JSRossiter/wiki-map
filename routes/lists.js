@@ -21,7 +21,12 @@ module.exports = (knex) => {
 
   router.post('/new', authenticateUser, (req, res) => {
     console.log(req.body);
-    dbInsert.insertList(req.body.title, req.session.user_id).then(data => {
+
+    dbInsert.insertList(req.body.title, req.session.user_id, req.body.private).then(data => {
+      if (req.body.private === "true") {
+        return dbInsert.insertAccess(data[0], req.session.user_id);
+      }
+    }).then(data => {
       res.json({ id: data[0] });
     });
   });

@@ -35,7 +35,7 @@ module.exports = function(knex) {
     },
     insertAccess: (listId, userId) => {
       console.log("Inserting into private_list_access...");
-      return knex.insert({list_id: listId, user_id: userId})
+      return knex.insert({list_id: listId, user_id: userId}, "list_id")
       .into('private_list_access');
     }
   };

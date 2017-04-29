@@ -41,7 +41,7 @@ function newList (event) {
     $.ajax({
       url: "/lists/new",
       method: "POST",
-      data: $title.serialize(),
+      data: $('form').serialize(),
       success: function (data) {
         window.location.replace("/lists/" + data.id);
       }
