@@ -45,10 +45,11 @@ module.exports = function(knex) {
     },
     getContributions: (userId) => {
       console.log('Getting contributions for', userId);
-      return knex.select('username', 'users.id')
-      .from('users')
-      .join('contributions', 'users.id', '=', 'contributions.user_id')
-      .where('users.id', '=', userId);
+      return knex.select('lists.id', 'lists.title')
+      .from('contributions')
+      .join('points', 'points.id', '=', 'contributions.point_id')
+      .join('lists', 'lists.id', '=', 'points.list_id')
+      .where('contributions.user_id', '=', userId);
     }
   };
 };
