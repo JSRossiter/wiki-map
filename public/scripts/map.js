@@ -4,7 +4,6 @@ var marker;
 var currentMarker;
 // takes an array of point objects, places markers, binds popups and sets view
 function addMarkers (points) {
-  console.log(points);
   var markers = [];
   for (point of points) {
     var coords = L.latLng(point.coordinates.x, point.coordinates.y);
@@ -46,11 +45,21 @@ function flashMessage (message) {
   });
 }
 
+function addProtocol (url) {
+  let newURL = url;
+  if (!newURL.match(/^http(s?):\/\//)) {
+    newURL = "http://" + newURL;
+  }
+  return newURL;
+}
+
 function isValidImageUrl(url, callback) {
-  var img = new Image();
-  img.onerror = function() { flashMessage("Please enter a valid image URL") }
-  img.onload =  callback;
-  img.src = url;
+  var testImage = new Image();
+  console.log(testImage);
+  testImage.onerror = function() {
+    flashMessage("Please enter a valid image URL") }
+  testImage.onload = callback;
+  testImage.src = addProtocol(url);
 }
 
 function deletePoint (event) {
@@ -155,7 +164,7 @@ function newPoint (event) {
   if (!$("input[name='title']").val()) {
     flashMessage("Please enter a title");
   } else if ($("input[name='image']").val()) {
-    isValidImageUrl($("input[name='image']").val(), event.data.post)
+    isValidImageUrl($("input[name='image']").val(), event.data.post);
   } else {
     event.data.post();
   }
