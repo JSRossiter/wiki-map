@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
   <link rel="stylesheet" href="/vendor/border-box.css">
   <link rel="stylesheet" href="/styles/map.css">
+
 </head>
 
 <body>
@@ -16,7 +17,7 @@
     <% include partials/_header.ejs %>
   </nav>
 
-  <main class='container' data-list-id='<%= list_id %>'>
+  <main class='container col-lg-12' data-list-id='<%= list_id %>'>
     <h1><%= list %></h1>
     <% if (private === true) { %>
     <form class='access'>
@@ -27,6 +28,8 @@
     <% } %>
 
     <a href='/history/<%=list_id%>'>Edit History</a>
+
+
     <div id="map">
 
     </div>

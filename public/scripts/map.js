@@ -199,7 +199,7 @@ function giveAccess (event) {
       flashMessage('Access granted to ' + $('#access').val());
       $('#access').val('');
     }
-  })
+  });
 }
 
 function onMapClick (e) {
