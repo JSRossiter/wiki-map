@@ -124,10 +124,14 @@ exports.seed = function(knex, Promise) {
   })
   .then(function() {
     return Promise.all([
-      knex('points_edit_history').insert({id: 1000, point_id: 1000, column_name: 'title', old_value: 'AAA', new_value: '1st', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1000, point_id: 1001, column_name: 'title', old_value: 'AAA', new_value: '1st', updated_at: '2017-1-1'}),
       knex('points_edit_history').insert({id: 1001, point_id: 1001, column_name: 'description', old_value: 'tocofino ', new_value: 'seed description', updated_at: '2017-1-2'}),
       knex('points_edit_history').insert({id: 1002, point_id: 1001, column_name: 'image', old_value: 'old image', new_value: 'new image', updated_at: '2017-1-3'}),
-      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '3rd', new_value: '4th', updated_at: '2017-1-4'})
+      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '3rd', new_value: '4th', updated_at: '2017-1-4'}),
+      knex('points_edit_history').insert({id: 1004, point_id: 1001, column_name: 'title', old_value: 'mayday', new_value: 'jay', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1005, point_id: 1001, column_name: 'description', old_value: 'static analysis ', new_value: 'heuristics', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1006, point_id: 1001, column_name: 'image', old_value: 'https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg', new_value: 'https://pbs.twimg.com/profile_images/blahblah/Y-zl5UYk.jpg', updated_at: '2017-1-3'}),
+      knex('points_edit_history').insert({id: 1007, point_id: 1001, column_name: 'coordinates', old_value: '39.1234, 95,2340', new_value: '30.3439, 96.3492', updated_at: '2017-1-4'}),
     ]);
   })
   .catch(error => {

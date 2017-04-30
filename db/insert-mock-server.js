@@ -4,20 +4,24 @@ const knex = db.connect();
 const queryMethods = require("./query-db")(knex);
 const removePoints = require("./update-points")(knex);
 
-let title = "hi";
-
-// queryMethods.getOnePoint(1001)
-// .then(res => {
-//   const title = res[0].title;
-//   const description = res[0].description;
-//   const img = res[0].image;
-//   const coord = res[0].coordinates;
-//   console.log("title description img coord", title, description, img, coord);
-//   console.log("\n length", res.length);
+// queryMethods.getEditHistoryForList(1001)
+// .then(result => {
+//   for (let i in result) {
+//     console.log(result[i].updated_at);
+//     console.log(typeof result[i].updated_at);
+//     console.log(JSON.stringify(result[i].updated_at));
+//     console.log(typeof JSON.stringify(result[i].updated_at));
+//   }
 // });
-queryMethods.getEditHistoryForList(1001)
-.then(result => {
-  for (let i in result) {
-    console.log(i, result[i].column_name);
-  }
+
+// queryMethods.getOldPointStats(1002)
+// .then(res => {
+//   for (let i in res) {
+//     console.log(res[i]);
+//   }
+// });
+
+queryMethods.getListFromPointId(1001)
+.then(res => {
+  console.log(res[0].list_id);
 });

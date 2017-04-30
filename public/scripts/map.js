@@ -201,7 +201,7 @@ function giveAccess (event) {
     error: function (error) {
       flashMessage(JSON.parse(error.responseText).message);
     }
-  })
+  });
 }
 
 function onMapClick (e) {
