@@ -67,7 +67,20 @@ module.exports = function(knex) {
       console.log('Getting access list for', listId);
       return knex('users').select('username')
       .join('private_list_access', 'private_list_access.user_id', 'users.id')
-      .where('private_list_access.list_id', listId)
+      .where('private_list_access.list_id', listId);
+    },
+    getEditHistory: () => {
+      console.log("Getting all edit history");
+      return knex('points_edit_history').select('*')
+      .groupBy('updated_at', 'points_edit_history.id');
+    },
+    getEditHistoryForList: listId => {
+      console.log('Getting edit history for list', listId);
+      return knex('points_edit_history').select('points_edit_history.*', 'list_id')
+      .from('points_edit_history')
+      .join('points', 'point_id', '=', 'points.id')
+      .where('list_id', '=', listId)
+      .orderBy('points_edit_history.updated_at', 'points_edit_history.id');
     }
   };
 };
