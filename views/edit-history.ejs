@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Wiki Map</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+  <link rel="stylesheet" href="/vendor/border-box.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+</head>
+
+<body>
+  <nav class='nav-bar'>
+    <% include partials/_header.ejs %>
+  </nav>
+
+  <main class='container'>
+    <h3> Old Titles </h3>
+    <% oldTitles.forEach(oldTitle => { %>
+      <p><%= oldTitle %></p>
+    <% }) %>
+    <% newTitles.forEach(newTitle => { %>
+      <p><%= newTitle %></p>
+    <% }) %>
+
+    <h3> Old descriptions </h3>
+    <% oldDescriptions.forEach(oldDescription => { %>
+      <p><%= oldDescription %></p>
+    <% }) %>
+    <% newDescriptions.forEach(newDescription => { %>
+      <p><%= newDescription %></p>
+    <% }) %>
+
+    <h3> Old Images </h3>
+    <% oldImages.forEach(oldImage => { %>
+      <p><%= oldImage %></p>
+    <% }) %>
+    <% newImages.forEach(newImage => { %>
+      <p><%= newImage %></p>
+    <% }) %>
+
+    <h3> Old coordinates </h3>
+    <% oldCoordinates.forEach(oldCoordinate => { %>
+      <p><%= oldCoordinate %></p>
+    <% }) %>
+    <% newCoordinates.forEach(newCoordinate => { %>
+      <p><%= newCoordinate %></p>
+    <% }) %>
+  </main>
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script src="/scripts/profile.js"></script>
+  <script src="/scripts/login-buttons.js"></script>
+</body>
+</html>

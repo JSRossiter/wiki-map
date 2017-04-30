@@ -235,6 +235,7 @@ function onMapClick (e) {
   marker.openPopup();
 };
 
+
 $(document).ready(function() {
   $.ajax({
     url: document.URL + '/points',
