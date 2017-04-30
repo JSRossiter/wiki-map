@@ -40,16 +40,23 @@ module.exports = (knex) => {
     console.log(info);
     dbQuery.getOnePoint(info.pointId)
     .then(result => {
-      // Insert update points_edit_history table
+      // Will refactor if time permits
       console.log('in /edit/:point_id, inserting into point_edit_history...');
 
       dbInsert.insertPointsEditHistory(info.pointId, 'title', result[0].title,
-      info.title).then(console.log("Successfully inserted title into points_edit_history"));
-      dbInsert.insertPointsEditHistory(info.pointId, 'description', result[0].description, info.description).then(console.log("Successfully inserted description into points_edit_history"));
+      info.title)
+      .then(console.log("Successfully inserted title into points_edit_history"));
+
+      dbInsert.insertPointsEditHistory(info.pointId, 'description', result[0].description, info.description)
+      .then(console.log("Successfully inserted description into points_edit_history"));
+
       dbInsert.insertPointsEditHistory(info.pointId, 'image', result[0].image,
-      info.image).then(console.log("Successfully inserted image into points_edit_history"));
+      info.image)
+      .then(console.log("Successfully inserted image into points_edit_history"));
+
       dbInsert.insertPointsEditHistory(info.pointId, 'coordinates', result[0].coordinates,
-      info.coordinates).then(console.log("Successfully inserted coordinates into points_edit_history"));
+      info.coordinates)
+      .then(console.log("Successfully inserted coordinates into points_edit_history"));
 
       // update current point
       dbUpdate.updatePoints(

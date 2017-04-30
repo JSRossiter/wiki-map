@@ -20,6 +20,7 @@ const knexLogger    = require('knex-logger');
 const profileRoutes = require('./routes/profile');
 const listRoutes    = require('./routes/lists');
 const pointRoutes   = require('./routes/points');
+const historyRoutes = require('./routes/history');
 
 // Helper functions
 const routeHelpers  = require('./routes/route-helpers');
@@ -56,6 +57,7 @@ app.use(express.static('public'));
 app.use('/profile', profileRoutes(knex));
 app.use('/lists', listRoutes(knex));
 app.use('/points', pointRoutes(knex));
+app.use('/history', historyRoutes(knex));
 
 
 app.get('/', (req, res) => {
