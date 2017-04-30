@@ -22,8 +22,7 @@ module.exports = (knex) => {
         console.log('query results from getFavoriteLists function:\n', data); //***Delete after testing
         res.json(data);
       }).catch(error => {
-        error.status = 500;
-        next(error);
+        next({ status: 500, message: 'Database error' });
       });
     } else {
       res.json([]);
@@ -35,23 +34,19 @@ module.exports = (knex) => {
       console.log('query results from getContributions function:\n', data); //***Delete after testing
       res.json(data);
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
-  // TODO refactor query to accept username
   router.post('/private_lists/:list_id', authenticateUser, (req, res, next) => {
     console.log(req.body);
     dbGet.getUserId(req.body.access).then(data => {
-      console.log(data[0]);
       return dbInsert.insertAccess(req.params.list_id, data[0].id);
     })
     .then(() => {
       res.status(200).send();
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 422, message: 'Please enter a valid username' });
     });
   });
 
@@ -60,8 +55,7 @@ module.exports = (knex) => {
       console.log('query results from getPrivateLists function:\n', data); //***Delete after testing
       res.json(data);
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
@@ -70,15 +64,13 @@ module.exports = (knex) => {
       dbInsert.insertFavList(req.params.list_id, req.session.user_id).then(() => {
         res.status(200).send();
       }).catch(error => {
-        error.status = 500;
-        next(error);
+        next({ status: 500, message: 'Database error' });
       });
     } else {
       dbRemove.removeFavList(req.params.list_id, req.session.user_id).then(() => {
         res.status(200).send();
       }).catch(error => {
-        error.status = 500;
-        next(error);
+        next({ status: 500, message: 'Database error' });
       });
     }
   });

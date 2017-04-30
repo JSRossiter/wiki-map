@@ -74,13 +74,11 @@ app.post('/login', (req, res, next) => {
       res.status(200).send();
     }
   }).catch(error => {
-    error.status = 500;
-    next(error);
+    next({ status: 500, message: 'Database error' });
   });
 });
 
 app.post('/register', (req, res, next) => {
-  // TODO does not check if user is already in database
   dbGet.getUserId(req.body.username).then(data => {
     if (data.length) {
       return next({ status: 409, message: 'This username is already taken' })
@@ -90,8 +88,7 @@ app.post('/register', (req, res, next) => {
         req.session.username = req.body.username;
         res.status(200).send();
       }).catch(error => {
-        error.status = 500;
-        next(error);
+        next({ status: 500, message: 'Database error' });
       });
     }
   });

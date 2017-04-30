@@ -14,8 +14,7 @@ module.exports = (knex) => {
       res.json(data);
     })
     .catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
@@ -29,8 +28,7 @@ module.exports = (knex) => {
     }).then(data => {
       res.json({ id: data[0] });
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
@@ -39,7 +37,7 @@ module.exports = (knex) => {
       res.json(data);
     }).catch(error => {
       error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
@@ -47,8 +45,7 @@ module.exports = (knex) => {
     dbGet.getPoints(req.params.list_id).then(data => {
       res.json(data);
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
@@ -62,8 +59,7 @@ module.exports = (knex) => {
       };
       res.render('map', templateVars);
     }).catch(error => {
-      error.status = 500;
-      next(error);
+      next({ status: 500, message: 'Database error' });
     });
   });
 
