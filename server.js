@@ -74,46 +74,34 @@ app.get('/', (req, res) => {
   res.render('index', templateVars);
 });
 
-app.post('/login', (req, res, next) => {
-  dbGet.getUserId(req.body.username).then(data => {
-    if (!data.length) {
-      return next({ status: 422, message: 'Username does not exist' })
-    } else {
-      req.session.user_id = data[0].id;
-      req.session.username = req.body.username;
-      res.status(200).send();
-    }
-  }).catch(error => {
-    next({ status: 500, message: 'Database error' });
+app.post('/login', (req, res) => {
+  dbGet.getUserId(req.body.username)
+  .then(data => {
+    req.session.user_id = data[0].id;
+    req.session.username = req.body.username;
+    res.status(200).send();
+  })
+  .catch(error => {
+    console.error(error);
   });
 });
 
-app.post('/register', (req, res, next) => {
-  dbGet.getUserId(req.body.username).then(data => {
-    if (data.length) {
-      return next({ status: 409, message: 'This username is already taken' })
-    } else {
-      dbInsert.insertUser(req.body.username).then(data => {
-        req.session.user_id = data[0].id;
-        req.session.username = req.body.username;
-        res.status(200).send();
-      }).catch(error => {
-        next({ status: 500, message: 'Database error' });
-      });
-    }
+app.post('/register', (req, res) => {
+  // does not check if user is already in database
+  dbInsert.insertUser(req.body.username)
+  .then(data => {
+    req.session.user_id = data[0].id;
+    req.session.username = req.body.username;
+    res.status(200).send();
+  })
+  .catch(error => {
+    console.error(error);
   });
 });
 
-app.post('/logout', (req, res, next) => {
+app.post('/logout', (req, res) => {
   req.session = null;
   res.status(200).send();
-});
-
-app.use('/', (error, req, res, next) => {
-  console.log(error);
-  error.path = req.path;
-  error.username = req.session.username;
-  res.status(error.status).send(error);
 });
 
 app.listen(PORT, () => {

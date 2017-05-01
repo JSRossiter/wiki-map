@@ -55,6 +55,7 @@ function addProtocol (url) {
 
 function isValidImageUrl(url, callback) {
   var testImage = new Image();
+  console.log(testImage);
   testImage.onerror = function() {
     flashMessage("Please enter a valid image URL") }
   testImage.onload = callback;
@@ -158,6 +159,9 @@ function postPoint () {
   });
 }
 
+
+
+
 function newPoint (event) {
   event.preventDefault();
   if (!$("input[name='title']").val()) {
@@ -197,11 +201,8 @@ function giveAccess (event) {
     success: function () {
       flashMessage('Access granted to ' + $('#access').val());
       $('#access').val('');
-    },
-    error: function (error) {
-      flashMessage(JSON.parse(error.responseText).message);
     }
-  })
+  });
 }
 
 function onMapClick (e) {
@@ -216,7 +217,7 @@ function onMapClick (e) {
     isDragging = true;
   });
 
-  marker.on('dragend', function (event){
+  marker.on('dragend', function(event){
     marker = event.target;
     var coordinates = marker.getLatLng();
     marker.setLatLng(coordinates,{id:10,draggable:'true'});
@@ -237,6 +238,18 @@ function onMapClick (e) {
   marker.openPopup();
 };
 
+function deleteOldMarker () {
+  // event.preventDefault();
+  $.ajax({
+    url: '/history/rollback/' + $(currentMarker).data("id") + '/' + $('main').data('list-id'),
+    method: 'POST',
+    success: function () {
+      console.log("Back to client side");
+      map.removeLayer(currentMarker);
+    }
+  });
+}
+
 
 $(document).ready(function() {
   $.ajax({
@@ -248,6 +261,7 @@ $(document).ready(function() {
     center: [49.2827, -123.1207],
     zoom: 13
   });
+
 
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -261,6 +275,6 @@ $(document).ready(function() {
   if($('.logged-in').length) {
     map.on('click', onMapClick);
   }
-  console.log()
+  deleteOldMarker();
   $("input[type='Submit'").click(giveAccess);
 });

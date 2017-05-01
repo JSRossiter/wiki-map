@@ -3,7 +3,7 @@ module.exports = function(knex) {
     getLists: () => {
       console.log('Getting all lists');
       return knex.select('lists.title', 'lists.id')
-      .from('lists')
+      .from('lists');
     },
     getOneList: (listId) => {
       console.log("Getting one list with id ", listId);
@@ -59,7 +59,7 @@ module.exports = function(knex) {
     },
     getPrivateLists: (userId) => {
       console.log('Getting private lists for', userId);
-      return knex('lists').distinct('lists.title', 'lists.id').select()
+      return knex('lists').select('lists.title', 'lists.id')
       .join('private_list_access', 'private_list_access.list_id', 'lists.id')
       .where('private_list_access.user_id', userId);
     },
@@ -74,13 +74,25 @@ module.exports = function(knex) {
       return knex('points_edit_history').select('*')
       .groupBy('updated_at', 'points_edit_history.id');
     },
-    getEditHistoryForList: listId => {
+    getEditHistoryForList: (listId) => {
       console.log('Getting edit history for list', listId);
       return knex('points_edit_history').select('points_edit_history.*', 'list_id')
       .from('points_edit_history')
       .join('points', 'point_id', '=', 'points.id')
       .where('list_id', '=', listId)
       .orderBy('points_edit_history.updated_at', 'points_edit_history.id');
+    },
+    getOldPointStats: (pointId) => {
+      console.log('Getting old stats from point', pointId);
+      return knex.select('*')
+      .from('points_edit_history')
+      .where('point_id', '=', pointId);
+    },
+    getListFromPointId: (pointId) => {
+      console.log('Getting list_id from point_id', pointId);
+      return knex.select('points.list_id')
+      .from('points')
+      .where('points.id', '=', pointId);
     }
   };
 };

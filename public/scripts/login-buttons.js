@@ -18,9 +18,6 @@ function loginNavButton (event) {
       data: $('form').serialize(),
       success: function(data) {
         window.location.replace("/");
-      },
-      error: function (error) {
-        flashMessage(JSON.parse(error.responseText).message);
       }
     });
   });
@@ -38,9 +35,6 @@ function registerNavButton (event) {
       data: $('form').serialize(),
       success: function(data) {
         window.location.replace("/");
-      },
-      error: function (error) {
-        flashMessage(JSON.parse(error.responseText).message);
       }
     });
   });

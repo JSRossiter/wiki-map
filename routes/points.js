@@ -2,9 +2,9 @@
 
 const express = require('express');
 const router  = express.Router();
+const authenticateUser = require('./route-helpers');
 
 module.exports = (knex) => {
-  const {authenticateUser} = require('./route-helpers')(knex);
   const dbInsert = require("../db/insert-tables")(knex);
   const dbUpdate = require("../db/update-points")(knex);
   const dbQuery = require("../db/query-db")(knex);
@@ -37,7 +37,7 @@ module.exports = (knex) => {
       image: req.body.image,
       coordinates: req.body.coordinates
     };
-    console.log(info);
+
     dbQuery.getOnePoint(info.pointId)
     .then(result => {
       // Will refactor if time permits

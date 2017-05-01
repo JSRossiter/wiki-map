@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
   <link rel="stylesheet" href="/vendor/border-box.css">
   <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body>
@@ -13,39 +14,41 @@
     <% include partials/_header.ejs %>
   </nav>
 
-  <main class='container'>
-    <h3> Old Titles </h3>
-    <% oldTitles.forEach(oldTitle => { %>
-      <p><%= oldTitle %></p>
-    <% }) %>
-    <% newTitles.forEach(newTitle => { %>
-      <p><%= newTitle %></p>
-    <% }) %>
-
-    <h3> Old descriptions </h3>
-    <% oldDescriptions.forEach(oldDescription => { %>
-      <p><%= oldDescription %></p>
-    <% }) %>
-    <% newDescriptions.forEach(newDescription => { %>
-      <p><%= newDescription %></p>
-    <% }) %>
-
-    <h3> Old Images </h3>
-    <% oldImages.forEach(oldImage => { %>
-      <p><%= oldImage %></p>
-    <% }) %>
-    <% newImages.forEach(newImage => { %>
-      <p><%= newImage %></p>
-    <% }) %>
-
-    <h3> Old coordinates </h3>
-    <% oldCoordinates.forEach(oldCoordinate => { %>
-      <p><%= oldCoordinate %></p>
-    <% }) %>
-    <% newCoordinates.forEach(newCoordinate => { %>
-      <p><%= newCoordinate %></p>
-    <% }) %>
-  </main>
+  <div class='container col-md-12'>
+    <div class="row">
+      <table class="table table-striped">
+        <tr class="success">
+          <th>Old Title</th>
+          <th>New Title</th>
+          <th>Old Description</th>
+          <th>New Description</th>
+          <th>Old Image</th>
+          <th>New Image</th>
+          <th>Old Coordinates</th>
+          <th>New Coordinates</th>
+          <th>Roll back</th>
+        </tr>
+      <% for (let i = 0; i < oldTitles.length; i++) { %>
+        <tr>
+          <th><%=oldTitles[i]%></th>
+          <th><%=newTitles[i]%></th>
+          <th><%=oldDescriptions[i]%></th>
+          <th><%=newDescriptions[i]%></th>
+          <th><%=oldImages[i]%></th>
+          <th><%=newImages[i]%></th>
+          <th><%=oldCoordinates[i]%></th>
+          <th><%=newCoordinates[i]%></th>
+          <th>
+            <form action='/history/rollback/<%=pointIds[i]%>/<%=listId[0]%>' method="POST">
+              <button type="submit" class="btn btn-default">Select</button>
+            </form>
+          </th>
+        </tr>
+      <% } %>
+      </table>
+    </div>
+  </div>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script src="/scripts/profile.js"></script>
   <script src="/scripts/login-buttons.js"></script>
