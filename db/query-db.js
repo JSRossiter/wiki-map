@@ -59,7 +59,7 @@ module.exports = function(knex) {
     },
     getPrivateLists: (userId) => {
       console.log('Getting private lists for', userId);
-      return knex('lists').distinct('lists.title', 'lists.id').select()
+      return knex('lists').select('lists.title', 'lists.id')
       .join('private_list_access', 'private_list_access.list_id', 'lists.id')
       .where('private_list_access.user_id', userId);
     },

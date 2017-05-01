@@ -64,6 +64,7 @@ module.exports = (knex) => {
     const oldCoord = [];
     const oldImage = [];
 
+
     dbQuery.getOldPointStats(id)
     .then(result => {
       for (let item in result) {
@@ -79,7 +80,6 @@ module.exports = (knex) => {
           }
         }
       }
-      console.log("list id, point id", listId, id);
       dbInsert.insertPoint(oldTitle[0], oldDescription[0], oldImage[0], oldCoord[0], listId).then(insRes => {
         console.log("Inserted old point into points successfully");
       });
