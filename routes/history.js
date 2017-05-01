@@ -92,6 +92,7 @@ module.exports = (knex) => {
   });
 
   router.get('/', authenticateUser, (req, res) => {
+    console.log("testttt");
     let templateVars = { username: req.session.username };
     res.render('./edit-history', templateVars);
   });
