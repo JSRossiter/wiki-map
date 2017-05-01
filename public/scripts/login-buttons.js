@@ -53,7 +53,7 @@ function logoutButton (event) {
     success: function(data) {
       window.location.replace("/");
     }
-  })
+  });
 }
 
 $(function() {

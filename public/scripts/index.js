@@ -27,25 +27,24 @@
     Logged in users can use the 'favorite lists' feature (like/unlike a list).*/
 function createListCard (lists, faves) {
   for (list of lists) {
-    var $listCard = $('<div class="col-md-4 col-sm-6 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="portfolio-hover"><div class="portfolio-hover-content"><i class="fa fa-plus fa-3x"></i></div></div><img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>');
+    var $listCard = $('<div class="col-md-4 col-sm-6 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="portfolio-hover"><div class="portfolio-hover-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>');
     var $title = $('<div class="portfolio-caption">')
       .append($('<a>')
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
     var $faveCount = $('<p class="text-muted">').addClass('counter').text('Likes ' + list.count);
-    var $star = $('<span class="fa fa-star fa-2x" aria-hidden="true">');
     $listCard.append($title);
     $title.append($faveCount);
     if($('.logged-in').length) {
-      var $faveBtn = $('<div>').text('Fave').addClass('favorite').data('list-id', list.id);
+      var $faveBtn = $('<span class="fa fa-star fa-3x"').addClass('favorite').data('list-id', list.id);
       if (faves && faves.find(function (fave) {
         return fave.id === list.id;
       })) {
         $faveBtn.addClass('liked');
       }
       var $faveBtnCell = $('<div>').append($faveBtn);
-      $listCard.append($faveBtnCell);
+      $title.append($faveBtnCell);
     }
     $('#lists').append($listCard);
   }
