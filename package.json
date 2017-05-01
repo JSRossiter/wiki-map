@@ -22,6 +22,9 @@
     "pg": "^6.0.2"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
     "knex-logger": "^0.1.0",
     "morgan": "^1.7.0",
     "nodemon": "^1.11.0"
