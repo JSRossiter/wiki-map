@@ -40,6 +40,7 @@ module.exports = (knex) => {
 
     dbQuery.getOnePoint(info.pointId)
     .then(result => {
+      console.log(result);
       // Will refactor if time permits
       console.log('in /edit/:point_id, inserting into point_edit_history...');
 
