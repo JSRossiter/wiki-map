@@ -33,7 +33,7 @@ function createListCard (lists, faves) {
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
-    var $faveCount = $('<p class="text-muted">').addClass('counter').text('Likes ' + list.count);
+    var $faveCount = $('<p class="large text-muted">').addClass('counter').text('Likes ' + list.count);
     $listCard.append($title);
     $title.append($faveCount);
     if($('.logged-in').length) {

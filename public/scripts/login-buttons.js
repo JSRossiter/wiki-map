@@ -2,7 +2,7 @@
 function createLoginForm (input) {
   var $form = $('<form>');
   var $input = $('<input type="text" name="username">');
-  var $submit = $('<input type="submit">').attr('value', input);
+  var $submit = $('<input type="submit" class=".btn-xl">').attr('value', input);
   return $form.append($input, $submit);
 }
 

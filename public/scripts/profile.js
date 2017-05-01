@@ -14,7 +14,7 @@ $(function() {
       if (data.length) {
         renderList(data, $('.favorites'));
       } else {
-        $('.favorites').append($('<p class="text-muted">').text('Go checkout some of the lists our users have made'));
+        $('.favorites').append($('<p class="large text-muted">').text('Go checkout some of the lists our users have made'));
       }
     }
   });
@@ -25,7 +25,7 @@ $(function() {
       if (data.length) {
         renderList(data, $('.contributions'));
       } else {
-        $('.contributions').append($('<p class="text-muted">').text('Go add some points!'));
+        $('.contributions').append($('<p class="large text-muted">').text('Go add some points!'));
       }
     }
   });
