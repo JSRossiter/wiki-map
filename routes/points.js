@@ -54,7 +54,7 @@ module.exports = (knex) => {
       info.image)
       .then(console.log("Successfully inserted image into points_edit_history"));
 
-      dbInsert.insertPointsEditHistory(info.pointId, 'coordinates', result[0].coordinates,
+      dbInsert.insertPointsEditHistory(info.pointId, 'coordinates', JSON.stringify(result[0].coordinates),
       info.coordinates)
       .then(console.log("Successfully inserted coordinates into points_edit_history"));
 
