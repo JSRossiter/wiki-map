@@ -123,12 +123,17 @@ exports.seed = function(knex, Promise) {
     return Promise.all([
       knex('points_edit_history').insert({id: 1000, point_id: 1001, column_name: 'title', old_value: 'Render me', new_value: '1st', updated_at: '2017-1-1'}),
       knex('points_edit_history').insert({id: 1001, point_id: 1001, column_name: 'description', old_value: 'describe me', new_value: 'seed description', updated_at: '2017-1-1'}),
-      knex('points_edit_history').insert({id: 1002, point_id: 1001, column_name: 'image', old_value: 'old image', new_value: 'new image', updated_at: '2017-1-1'}),
-      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '49.264943,-123.017085', new_value: '49.280232952068, -123.099231719971', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1002, point_id: 1001, column_name: 'image', old_value: 'https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg',
+      new_value: 'new image', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '49.2827212,-123.1048181', new_value: '49.280232952068, -123.099231719971', updated_at: '2017-1-1'}),
       knex('points_edit_history').insert({id: 1004, point_id: 1002, column_name: 'title', old_value: 'mayday', new_value: 'jay', updated_at: '2017-1-2'}),
       knex('points_edit_history').insert({id: 1005, point_id: 1002, column_name: 'description', old_value: 'static analysis ', new_value: 'heuristics', updated_at: '2017-1-2'}),
-      knex('points_edit_history').insert({id: 1006, point_id: 1002, column_name: 'image', old_value: 'https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg', new_value: 'https://pbs.twimg.com/profile_images/blahblah/Y-zl5UYk.jpg', updated_at: '2017-1-2'}),
-      knex('points_edit_history').insert({id: 1007, point_id: 1002, column_name: 'coordinates', old_value: '49.264943,-123.017082', new_value: '49.280232952168, -123.039231719971', updated_at: '2017-1-2'})
+      knex('points_edit_history').insert({id: 1006, point_id: 1002, column_name: 'image', old_value: 'http://static1.squarespace.com/static/5480d9cbe4b0e3ea019971a8/t/54a8ffdfe4b0243cdd54e363/1492718212399/?format=1500w', new_value: 'https://pbs.twimg.com/profile_images/blahblah/Y-zl5UYk.jpg', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1007, point_id: 1002, column_name: 'coordinates', old_value: '49.2708319,-123.1467779', new_value: '49.2870468,-123.1128433', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1008, point_id: 1000, column_name: 'title', old_value: 'Render me', new_value: '1st', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1009, point_id: 1000, column_name: 'description', old_value: 'describe me', new_value: 'seed description', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1010, point_id: 1000, column_name: 'image', old_value: 'http://foodology.ca/wp-content/uploads/2012/10/miku-aburi.jpg', new_value: 'new image', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1011, point_id: 1000, column_name: 'coordinates', old_value: '49.2827222,-123.1048181', new_value: '49.28023295235, -123.099231719974', updated_at: '2017-1-1'})
     ]);
   })
   .catch(error => {

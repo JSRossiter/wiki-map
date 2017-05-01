@@ -159,6 +159,9 @@ function postPoint () {
   });
 }
 
+
+
+
 function newPoint (event) {
   event.preventDefault();
   if (!$("input[name='title']").val()) {
@@ -235,6 +238,18 @@ function onMapClick (e) {
   marker.openPopup();
 };
 
+function deleteOldMarker () {
+  // event.preventDefault();
+  $.ajax({
+    url: '/history/rollback/' + $(currentMarker).data("id") + '/' + $('main').data('list-id'),
+    method: 'POST',
+    success: function () {
+      console.log("Back to client side");
+      map.removeLayer(currentMarker);
+    }
+  });
+}
+
 
 $(document).ready(function() {
   $.ajax({
@@ -246,6 +261,7 @@ $(document).ready(function() {
     center: [49.2827, -123.1207],
     zoom: 13
   });
+
 
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -259,6 +275,6 @@ $(document).ready(function() {
   if($('.logged-in').length) {
     map.on('click', onMapClick);
   }
-  console.log()
+  deleteOldMarker();
   $("input[type='Submit'").click(giveAccess);
 });
