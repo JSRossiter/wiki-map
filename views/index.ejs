@@ -39,6 +39,7 @@
     <% include partials/_nav-bar.ejs %>
 
     <!-- Welcome Section -->
+    <section id="contact">
     <header>
       <div class="container">
         <div class="intro-text">
@@ -109,37 +110,15 @@
               </div>
               <img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>
               <div class="portfolio-caption">
-                <a href="/lists/1003">Music Venues</a>
+                <a href="/lists/1003" class='list-title'>Music Venues</a>
+                <p class="large text-muted counter"></p>
+                <div>
+                <span class="fa fa-star fa-3x favorite"></span>
               </div>
             </div>
           </div>
         </section>
-
-    <!-- Portfolio-style modals to showcase lists -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="close-modal" data-dismiss="modal">
-                    <div class="lr">
-                        <div class="rl">
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8 col-lg-offset-2">
-                            <div class="modal-body">
-                                <h2>List Title</h2>
-                                <img class="img-responsive img-centered" src="img/portfolio/roundicons-free.png" alt="">
-                                <p>INSERT MAP</p>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Go back</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  </section>
 
     <!-- jQuery -->
     <script src="/vendor/jquery/jquery.min.js"></script>

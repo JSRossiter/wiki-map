@@ -33,7 +33,7 @@ function createListCard (lists, faves) {
       .attr('href', '/lists/' + list.id)
       .addClass('list-title')
       .text(list.title));
-    var $faveCount = $('<p class="large text-muted">').addClass('counter').text('Likes ' + list.count);
+    var $faveCount = $('<p class="large text-muted">').addClass('counter').text(list.count);
     $listCard.append($title);
     $title.append($faveCount);
     if($('.logged-in').length) {
@@ -89,7 +89,7 @@ function favorite (event) {
     data: {favorite: check},
     success: function () {
       $(event.target).toggleClass('liked');
-      var $counter = $(event.target).closest('p').find('.counter');
+      var $counter = $(event.target).closest('div').siblings('.counter');
       if (check) {
         $counter.text(parseInt($counter.text(), 10) + 1);
       } else {
@@ -113,5 +113,5 @@ $(function() {
       $('.favorite').click(favorite);
     });
   });
-  $("input[value='Submit'").click(newList);
+  $("input[type='Submit'").click(newList);
 });

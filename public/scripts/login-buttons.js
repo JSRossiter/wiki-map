@@ -8,8 +8,8 @@ function createLoginForm (input) {
 
 function loginNavButton (event) {
   event.preventDefault();
-  $('.container').empty();
-  $('.container').append(createLoginForm("Login"));
+  $('section').empty();
+  $('section').append(createLoginForm("Login"));
   $('input[type="submit"]').click(function (event) {
     event.preventDefault();
     $.ajax({
@@ -25,8 +25,8 @@ function loginNavButton (event) {
 
 function registerNavButton (event) {
   event.preventDefault();
-  $('.container').empty();
-  $('.container').append(createLoginForm("Register"));
+  $('section').empty();
+  $('section').append(createLoginForm("Register"));
   $('input[type="submit"]').click(function (event) {
     event.preventDefault();
     $.ajax({

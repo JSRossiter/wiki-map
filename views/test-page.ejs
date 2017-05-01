@@ -39,23 +39,29 @@
     <% include partials/_nav-bar.ejs %>
 
     <!-- Welcome Section -->
+    <section id="homepage">
     <header>
-        <div class="container">
-            <div class="intro-text">
-                <div class="intro-lead-in">the best crowdsourced guidebook</div>
-                <div class="intro-heading">Welcome To WikiMap</div>
-                <div class="form-group">
-                <form>
-                  <label for="title">New List</label>
-                  <input id="title" type="text" name="title">
-                  <input type="radio" name="private" value="false" checked="true">Public
-                  <input type="radio" name="private" value="true">Private
-                  <input type="submit" value="Submit">
-                </form>
-                </div>
-            </div>
-        </div>
-    </header>
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-lead-in">the best crowdsourced guidebook</div>
+          <div class="intro-heading">Welcome To WikiMap</div>
+          <form>
+           <p class="text-primary">
+            <label for="title">Enter a name for your list:</label>
+            <input id="title" type="text" name="title">
+          </p>
+          <p class="large">
+            <input type="radio" name="private" value="false" checked="true">Public
+            <input type="radio" name="private" value="true">Private
+          </p>
+          <p>
+            <input type="submit" class='btn-xl' value="Create New List">
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
 
     <!-- How It Works Section -->
     <section id="services">
@@ -67,20 +73,20 @@
             </div>
             <div class="row text-center">
                 <div class="col-sm-6">
-                    <span class="fa-stack fa-4x">
+                    <a href="/#lists"><span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                    </span>
+                        <i class="fa fa-search fa-stack-1x fa-inverse"></i>
+                    </span></a>
                     <h4 class="service-heading">Browse All Lists</h4>
-                    <p class="text-muted">See what our contributors have added.</p>
+                    <p class="large text-muted">See what our contributors have added.</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fa fa-laptop fa-stack-1x fa-inverse"></i>
+                        <i class="fa fa-pencil-square-o fa-stack-1x fa-inverse"></i>
                     </span>
                     <h4 class="service-heading">Create Your Own List</h4>
-                    <p class="text-muted">Become a contributor to create new lists, add or edit places, and keep track of your favorite lists.</p>
+                    <p class="large text-muted">Become a contributor to create new lists, add or edit places, and keep track of your favorite lists.</p>
                 </div>
             </div>
         </div>
@@ -88,20 +94,33 @@
 
     <!-- All Lists Section -->
     <section id="portfolio" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Explore Vancouver</h2>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading">Explore Vancouver</h2>
+          </div>
+        </div>
+        <div class="row" id="lists">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a href="/lists/1003" class="portfolio-link">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-search-plus fa-3x"></i>
                 </div>
-            </div>
-            <div class="row" id="lists">
-
+              </div>
+              <img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>
+              <div class="portfolio-caption">
+                <a href="/lists/1003" class='list-title'>Music Venues</a>
+                <p class="large text-muted counter"></p>
+                <div>
+                <span class="fa fa-star fa-3x favorite"></span>
               </div>
             </div>
-    </section>
+          </div>
+        </section>
 
     <!-- Portfolio-style modals to showcase lists -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+<!--     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="close-modal" data-dismiss="modal">
@@ -124,7 +143,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+  </section>
 
     <!-- jQuery -->
     <script src="/vendor/jquery/jquery.min.js"></script>
@@ -148,4 +168,3 @@
 </body>
 
 </html>
-
