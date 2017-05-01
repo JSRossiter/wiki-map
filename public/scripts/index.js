@@ -23,7 +23,7 @@
 // }
 
 
-/*  After getting lists and favorites from db, format 'card' to display.
+/*  After getting lists and favorites from db, format list display card.
     Logged in users can use the 'favorite lists' feature (like/unlike a list).*/
 function createListCard (lists, faves) {
   for (list of lists) {

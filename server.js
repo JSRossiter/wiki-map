@@ -63,7 +63,8 @@ app.use('/history', historyRoutes(knex));
 /*** Delete this section after testing CSS ***/
 //----------------------------------
 app.get('/test', (req, res) => {
-  res.render('test-page');
+  let templateVars = { username: req.session.username };
+  res.render('test-page', templateVars);
 });
 //----------------------------------
 
