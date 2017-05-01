@@ -20,8 +20,3 @@ const removePoints = require("./update-points")(knex);
 //     console.log(res[i]);
 //   }
 // });
-
-queryMethods.getListFromPointId(1001)
-.then(res => {
-  console.log(res[0].list_id);
-});
