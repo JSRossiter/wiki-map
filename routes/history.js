@@ -8,6 +8,7 @@ const authenticateUser = require('./route-helpers');
 // return error({error: 404, message: "error"});
 module.exports = (knex) => {
   const dbQuery = require("../db/query-db")(knex);
+  const dbInsert = require("../db/insert-tables")(knex);
 
   router.get('/:list_id', authenticateUser, (req, res) => {
     const id = req.params.list_id;
@@ -21,6 +22,8 @@ module.exports = (knex) => {
     const oldCoord = [];
     const newCoord = [];
     const updatedAt = [];
+    const listArray = [];
+    listArray.push(id);
 
     dbQuery.getEditHistoryForList(id)
     .then(result => {
@@ -44,7 +47,7 @@ module.exports = (knex) => {
           }
         }
       }
-      let templateVars = { username: req.session.username, oldTitles: oldTitle, newTitles: newTitle, oldDescriptions: oldDescription, newDescriptions: newDescription, oldImages: oldImage, newImages: newImage, oldCoordinates: oldCoord, newCoordinates: newCoord, pointIds: pointId, updatedAts: updatedAt };
+      let templateVars = { username: req.session.username, oldTitles: oldTitle, newTitles: newTitle, oldDescriptions: oldDescription, newDescriptions: newDescription, oldImages: oldImage, newImages: newImage, oldCoordinates: oldCoord, newCoordinates: newCoord, pointIds: pointId, updatedAts: updatedAt, listId: listArray };
       res.render('./edit-history', templateVars);
     })
     .catch(err => {
@@ -52,14 +55,17 @@ module.exports = (knex) => {
     });
   });
 
-  router.post('/rollback/:point_id/:updatedAt', authenticateUser, (req, res) => {
+  router.post('/rollback/:point_id/:list_id', authenticateUser, (req, res) => {
     // Do query to revert points to old value
     const id = req.params.point_id;
+    const listId = req.params.list_id;
     const oldTitle = [];
     const oldDescription = [];
     const oldCoord = [];
     const oldImage = [];
-    dbQuery.getOnePoint(id)
+
+
+    dbQuery.getOldPointStats(id)
     .then(result => {
       for (let item in result) {
         if (result.hasOwnProperty(item)) {
@@ -69,18 +75,15 @@ module.exports = (knex) => {
             oldDescription.push(result[item].old_value);
           } else if (result[item].column_name === 'image') {
             oldImage.push(result[item].old_value);
-          } else {
+          } else if (result[item].column_name === 'coordinates'){
             oldCoord.push(result[item].old_value);
           }
         }
       }
-      dbQuery.getListFromPointId(id)
-      .then(resultGet => {
-        for (let i = 0; i < oldTitle.length; i++) {
-          dbInsert.insertPoint(oldTitle[i], oldDescription[i], oldImage[i], oldCoord[i], resultGet[0].list_id);
-        }
-        res.redirect(`/lists/${resultGet[0].list_id}`);
+      dbInsert.insertPoint(oldTitle[0], oldDescription[0], oldImage[0], oldCoord[0], listId).then(insRes => {
+        console.log("Inserted old point into points successfully");
       });
+      res.redirect(`/lists/${listId}`);
     })
     .catch(err => {
       console.error(err);

@@ -1,10 +1,7 @@
-// users, points, lists, fav_lists, contributions
-
-// hi
 exports.seed = function(knex, Promise) {
-  return knex('contributions').del()
+  return knex('points_edit_history').del()
   .then(() => {
-    return knex('points_edit_history').del();
+    return knex('contributions').del();
   })
   .then(() => {
     return knex('points').del();
@@ -72,9 +69,9 @@ exports.seed = function(knex, Promise) {
       }),
       knex('points').insert({
         id: 1003,
-        title: 'AAA',
+        title: 'rest',
         description: 'Heat',
-        coordinates: '40.204942,-123.117063',
+        coordinates: '49.2708218,-123.145881',
         list_id: 1002
       }),
       knex('points').insert({
@@ -89,7 +86,7 @@ exports.seed = function(knex, Promise) {
         id: 1005,
         title: 'La La Land',
         description: 'Someone in the crowd',
-        coordinates: '40.204942,-123.117083',
+        coordinates: '49.264942,-123.017083',
         list_id: 1002
       })
     ]);
@@ -124,14 +121,14 @@ exports.seed = function(knex, Promise) {
   })
   .then(function() {
     return Promise.all([
-      knex('points_edit_history').insert({id: 1000, point_id: 1001, column_name: 'title', old_value: 'AAA', new_value: '1st', updated_at: '2017-1-1'}),
-      knex('points_edit_history').insert({id: 1001, point_id: 1001, column_name: 'description', old_value: 'tocofino ', new_value: 'seed description', updated_at: '2017-1-2'}),
-      knex('points_edit_history').insert({id: 1002, point_id: 1001, column_name: 'image', old_value: 'old image', new_value: 'new image', updated_at: '2017-1-3'}),
-      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '3rd', new_value: '4th', updated_at: '2017-1-4'}),
-      knex('points_edit_history').insert({id: 1004, point_id: 1001, column_name: 'title', old_value: 'mayday', new_value: 'jay', updated_at: '2017-1-1'}),
-      knex('points_edit_history').insert({id: 1005, point_id: 1001, column_name: 'description', old_value: 'static analysis ', new_value: 'heuristics', updated_at: '2017-1-2'}),
-      knex('points_edit_history').insert({id: 1006, point_id: 1001, column_name: 'image', old_value: 'https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg', new_value: 'https://pbs.twimg.com/profile_images/blahblah/Y-zl5UYk.jpg', updated_at: '2017-1-3'}),
-      knex('points_edit_history').insert({id: 1007, point_id: 1001, column_name: 'coordinates', old_value: '39.1234, 95,2340', new_value: '30.3439, 96.3492', updated_at: '2017-1-4'}),
+      knex('points_edit_history').insert({id: 1000, point_id: 1001, column_name: 'title', old_value: 'Render me', new_value: '1st', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1001, point_id: 1001, column_name: 'description', old_value: 'describe me', new_value: 'seed description', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1002, point_id: 1001, column_name: 'image', old_value: 'old image', new_value: 'new image', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1003, point_id: 1001, column_name: 'coordinates', old_value: '49.264943,-123.017085', new_value: '49.280232952068, -123.099231719971', updated_at: '2017-1-1'}),
+      knex('points_edit_history').insert({id: 1004, point_id: 1002, column_name: 'title', old_value: 'mayday', new_value: 'jay', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1005, point_id: 1002, column_name: 'description', old_value: 'static analysis ', new_value: 'heuristics', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1006, point_id: 1002, column_name: 'image', old_value: 'https://pbs.twimg.com/profile_images/697941981704552448/Y-zl5UYk.jpg', new_value: 'https://pbs.twimg.com/profile_images/blahblah/Y-zl5UYk.jpg', updated_at: '2017-1-2'}),
+      knex('points_edit_history').insert({id: 1007, point_id: 1002, column_name: 'coordinates', old_value: '49.264943,-123.017082', new_value: '49.280232952168, -123.039231719971', updated_at: '2017-1-2'})
     ]);
   })
   .catch(error => {

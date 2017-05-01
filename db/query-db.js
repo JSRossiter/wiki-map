@@ -3,7 +3,7 @@ module.exports = function(knex) {
     getLists: () => {
       console.log('Getting all lists');
       return knex.select('lists.title', 'lists.id')
-      .from('lists')
+      .from('lists');
     },
     getOneList: (listId) => {
       console.log("Getting one list with id ", listId);
