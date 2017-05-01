@@ -1,0 +1,11 @@
+#map {
+  height: 600px;
+}
+
+.container-fluid.map-page {
+  background-color: #222222;
+}
+
+.list-title {
+  color: #EEE;
+}
