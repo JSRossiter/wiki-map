@@ -2,14 +2,14 @@
 function createLoginForm (input) {
   var $form = $('<form>');
   var $input = $('<input type="text" name="username">');
-  var $submit = $('<input type="submit">').attr('value', input);
+  var $submit = $('<input type="submit" class=".btn-xl">').attr('value', input);
   return $form.append($input, $submit);
 }
 
 function loginNavButton (event) {
   event.preventDefault();
-  $('.container').empty();
-  $('.container').append(createLoginForm("Login"));
+  $('section').empty();
+  $('section').append(createLoginForm("Login"));
   $('input[type="submit"]').click(function (event) {
     event.preventDefault();
     $.ajax({
@@ -25,8 +25,8 @@ function loginNavButton (event) {
 
 function registerNavButton (event) {
   event.preventDefault();
-  $('.container').empty();
-  $('.container').append(createLoginForm("Register"));
+  $('section').empty();
+  $('section').append(createLoginForm("Register"));
   $('input[type="submit"]').click(function (event) {
     event.preventDefault();
     $.ajax({
@@ -47,7 +47,7 @@ function logoutButton (event) {
     success: function(data) {
       window.location.replace("/");
     }
-  })
+  });
 }
 
 $(function() {

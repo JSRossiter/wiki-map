@@ -60,6 +60,14 @@ app.use('/points', pointRoutes(knex));
 app.use('/history', historyRoutes(knex));
 
 
+/*** Delete this section after testing CSS ***/
+//----------------------------------
+app.get('/test', (req, res) => {
+  let templateVars = { username: req.session.username };
+  res.render('test-page', templateVars);
+});
+//----------------------------------
+
 app.get('/', (req, res) => {
   console.log('getting home ...');
   let templateVars = { username: req.session.username };

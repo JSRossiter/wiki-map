@@ -1,31 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
   <title>Wiki Map</title>
 
+  <!-- Bootstrap Core CSS -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Theme CSS -->
+  <link href="/styles/agency.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
   <link rel="stylesheet" href="/vendor/border-box.css">
-  <link rel="stylesheet" href="/styles/layout.css">
 </head>
 
-<body>
-  <nav class='nav-bar'>
-    <% include partials/_header.ejs %>
-  </nav>
+<body id="page-top" class="index">
+  <!-- Navigation -->
+  <% include partials/_nav-bar.ejs %>
 
-  <main class='container'>
-    <div class='favorites'>
-      <h2>My Favorite Lists</h2>
-    </div>
-    <div class='contributions'>
-      <h2>Lists I've Contributed To</h2>
-    </div>
-    <div class='private'>
+  <section id="contact">
+  </section>
+    <div role="navigation" class="container">
+      <ul class="nav nav-tabs nav-justified">
+        <li><a href="#favorite" data-toggle="tab"><h4>My Favorite Lists</h4></a>
+        </li>
+        <li><a href="#private" data-toggle="tab"><h4>My Private Lists</h4></a>
+        </li>
+        <li><a href="#contributions" data-toggle="tab"><h4>Lists I've Contributed To</h4></a>
+        </li>
+      </ul>
 
+      <div class="container tab-content">
+        <div class="favorites tab-pane active" id="favorite">
+        </div>
+        <div class="private tab-pane" id="private">
+        </div>
+        <div class="contributions tab-pane" id="contributions">
+        </div>
+      </div>
     </div>
-  </main>
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script src="/scripts/profile.js"></script>
-  <script src="/scripts/login-buttons.js"></script>
+  </section>
+
+    <!-- jQuery -->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/jquery-3.0.0.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="/scripts/jqBootstrapValidation.js"></script>
+    <script src="/scripts/contact_me.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="/scripts/agency.min.js"></script>
+    <script src="/scripts/profile.js"></script>
+    <script src="/scripts/login-buttons.js"></script>
+
 </body>
 </html>
