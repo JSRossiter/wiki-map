@@ -27,6 +27,9 @@ const routeHelpers  = require('./routes/route-helpers');
 const dbInsert      = require('./db/insert-tables')(knex);
 const dbGet         = require('./db/query-db')(knex);
 
+var srcPath = __dirname + '/styles';
+var destPath = __dirname + '/public/styles';
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -45,8 +48,8 @@ app.use(cookieSession({
 }));
 
 app.use('/styles', sass({
-  src: __dirname + '/styles',
-  dest: __dirname + '/public/styles',
+  src: srcPath,
+  dest: destPath,
   debug: true,
   outputStyle: 'expanded'
 }));
@@ -106,4 +109,6 @@ app.post('/logout', (req, res) => {
 
 app.listen(PORT, () => {
   console.log('Example app listening on port ' + PORT);
+  console.log('srcPath is ' + srcPath);
+  console.log('destPath is ' + destPath);
 });

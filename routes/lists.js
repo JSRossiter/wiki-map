@@ -11,7 +11,6 @@ module.exports = (knex) => {
 
   router.get('/', (req, res) => {
     dbGet.getFavoriteCounts().then(data => {
-      console.log("query results from getFavoriteCounts function:\n", data); //***Delete after testing
       res.json(data);
     })
     .catch(error => {
@@ -36,8 +35,8 @@ module.exports = (knex) => {
   router.get('/:list_id/access', (req, res) => {
     dbGet.getAccess(req.params.list_id).then(data => {
       res.json(data);
-    })
-  })
+    });
+  });
 
   router.get('/:list_id/points', (req, res) => {
     dbGet.getPoints(req.params.list_id).then(data => {

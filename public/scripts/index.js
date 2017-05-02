@@ -1,39 +1,44 @@
-// function renderList (lists, faves) {
+// function createListCard (lists, faves) {
 //   for (list of lists) {
-//     var $row = $('<tr>')
-//     var $title = $('<td>')
+//     var $listCard = $('<div class="col-md-4 col-sm-6 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="portfolio-hover"><div class="portfolio-hover-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>');
+//     var $title = $('<div class="portfolio-caption">')
 //       .append($('<a>')
 //       .attr('href', '/lists/' + list.id)
 //       .addClass('list-title')
 //       .text(list.title));
-//     var $faveCount = $('<td>').addClass('counter').text(list.count);
-//     $row.append($title, $faveCount);
+//     var $faveCount = $('<p class="large text-muted">').addClass('counter').text(list.count);
+//     $listCard.append($title);
+//     $title.append($faveCount);
 //     if($('.logged-in').length) {
-//       var $faveBtn = $('<a>').text('Fave').addClass('favorite').data('list-id', list.id);
+//       var $faveBtn = $('<span class="fa fa-star fa-3x">').addClass('favorite').data('list-id', list.id);
 //       if (faves && faves.find(function (fave) {
 //         return fave.id === list.id;
 //       })) {
 //         $faveBtn.addClass('liked');
 //       }
-//       var $faveBtnCell = $('<td>').append($faveBtn);
-//       $row.append($faveBtnCell);
+//       var $faveBtnCell = $('<div>').append($faveBtn);
+//       $title.append($faveBtnCell);
 //     }
-//     $('.lists table').append($row);
+//     $('#lists').append($listCard);
 //   }
 // }
+
 
 
 /*  After getting lists and favorites from db, format list display card.
     Logged in users can use the 'favorite lists' feature (like/unlike a list).*/
 function createListCard (lists, faves) {
   for (list of lists) {
-    var $listCard = $('<div class="col-md-4 col-sm-6 portfolio-item"><a href="#portfolioModal1" class="portfolio-link" data-toggle="modal"><div class="portfolio-hover"><div class="portfolio-hover-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>');
-    var $title = $('<div class="portfolio-caption">')
+    var $listCard = $('<div class="col-md-4 col-sm-6 portfolio-item">')
       .append($('<a>')
       .attr('href', '/lists/' + list.id)
+      .addClass('portfolio-link')
+      .html('<div class="portfolio-hover"><div class="portfolio-hover-content"><i class="fa fa-search-plus fa-3x"></i></div></div><img src="img/portfolio/roundicons.png" class="img-responsive" alt=""></a>'));
+    var $title = $('<div class="portfolio-caption">')
+      .append($('<div>')
       .addClass('list-title')
       .text(list.title));
-    var $faveCount = $('<p class="large text-muted">').addClass('counter').text(list.count);
+    var $faveCount = $('<div>').addClass('counter').text(list.count);
     $listCard.append($title);
     $title.append($faveCount);
     if($('.logged-in').length) {

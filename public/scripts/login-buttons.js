@@ -1,8 +1,8 @@
 // returns jquery form with submit button value as specified input
 function createLoginForm (input) {
-  var $form = $('<form>');
-  var $input = $('<input type="text" name="username">');
-  var $submit = $('<input type="submit" class=".btn-xl">').attr('value', input);
+  var $form = $('<form class="container">');
+  var $input = $('<input type="text" name="username" class="col-sm-offset-2 col-sm-6">');
+  var $submit = $('<input type="submit" class="btn-primary">').attr('value', input);
   return $form.append($input, $submit);
 }
 

@@ -2,18 +2,31 @@ body {
   background-color: #EEE;
 }
 
+.counter {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  color: #777;
+  font-weight: 700;
+  line-height: 2em;
+}
+
+.favorite {
+  line-height: 1.5em;
+}
+
+.liked {
+  color: #FED136;
+}
+
+.list-title {
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  line-height: 2em;
+}
+
 .nav-bar {
   height: 120px;
   width: 100%;
   background-color: grey;
-
-}
-
-.liked {
-  color: red;
-}
-
-section#homepage {
-  padding-top: 100px;
-  background-color:black
 }
